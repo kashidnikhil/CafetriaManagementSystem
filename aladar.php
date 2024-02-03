@@ -8,33 +8,34 @@
 ?>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>Darling Canteen</title>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/grid.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <title>Darling Canteen</title>
     </head>
     <body>
         <section class="section-plans">
             <div class="row">
-                <div class="col span-10-of-12">
-                    <img src="images/person.png" style="border-radius: 20%; width: 5vw;">
+                <div class="col span-6-of-12">
+                    <img src="images/person.png" class="profile-img">
                     <div style="display: inline-block; vertical-align: super"><?php echo $row['name']?><br><?php echo $row['custid']?></div>
                 </div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="profile.php">Profile</a></div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="index.php">Logout</a></div>
-
+                <div class="col span-6-of-12 header-btn">
+                    <a href="profile.php" class="custom-btn">Profile</a>
+                    <a href="index.php" class="custom-btn">Logout</a>
+                </div>
             </div>
         </section>
         <section class="section-features">
-			<div class="row">
-				<h2>Get food fast &mdash; not fast food.</h2>
-            <br><br><br>
-				<p class="long-feat">
-					Hello, We’re a part of VITFoodServices (VITFS), your new premium food-ordering-from-canteen service. We know you’re always busy. No time for standing in long queues. So let us take care of that, we’re really good at it, we promise!
-				</p>
-			</div>
-            <br><br><br>
+			<div class="row mb-10">
+                <div class="col span-1-of-1 box">
+                    <h2 class="mb-10">Get food fast &mdash; not fast food.</h2>
+                    <p class="long-feat">
+                        Hello, We’re a part of VITFoodServices (VITFS), your new premium food-ordering-from-canteen service. We know you’re always busy. No time for standing in long queues. So let us take care of that, we’re really good at it, we promise!
+                    </p>            
+                </div>
+            </div>
 			<div class="row">
 				<div class="col span-1-of-4 box">
 					<h3>Up to 365 days/year</h3>
@@ -62,6 +63,52 @@
 				</div>
 			</div>
 		</section>
+
+        <section class="section-meals">
+            <ul class="meals-show clearfix">
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/1.jpg" alt="Korean bibimbap with egg and vegetables">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/2.jpg" alt="Simple italian pizza with cherry tomatoes">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/3.jpg" alt="Chicken breast steak with vegetables">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/4.jpg" alt="Autumn pumpkin soup">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/5.jpg" alt="Paleo beef steak with vegetables">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/6.jpg" alt="Healthy baguette with egg and vegetables">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/7.jpg" alt="Burger with cheddar and bacon">
+                    </figure>
+                </li>
+                <li>
+                    <figure class="meal-photo">
+                        <img src="images/8.jpg" alt="Granola with cherries and strawberries">
+                    </figure>
+                </li>
+            </ul>
+        </section>
+
         <section class="section-cant">
             <div class="row">
                 <h2>ALAcarte</h2>
@@ -71,14 +118,14 @@
                 <table>
                     <tr>
                         <td width=150><strong>Item</strong></td>
-                        <td width=15><strong>Price (in Rupees)</strong></td>
+                        <td width=15><strong>Price (in Rs)</strong></td>
                         <td width=15><strong>Quantity</strong></td>
                     </tr>
                     <?php
                         $ala = "SELECT * from dalacarte";
                         $res = mysqli_query($db,$ala);
                         while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)){
-                            echo "<tr><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><input type=\"numeric\" class=\"btnsmall\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"></td>";
+                            echo "<tr><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"></td>";
                         }
                         if(isset($_POST['Submit'])){
                             $ala = "SELECT * from dalacarte";
@@ -138,51 +185,5 @@
                 </form>
             </div>
         </section>
-        <section class="section-meals">
-			<ul class="meals-show clearfix">
-				<li>
-					<figure class="meal-photo">
-						<img src="images/1.jpg" alt="Korean bibimbap with egg and vegetables">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/2.jpg" alt="Simple italian pizza with cherry tomatoes">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/3.jpg" alt="Chicken breast steak with vegetables">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/4.jpg" alt="Autumn pumpkin soup">
-					</figure>
-				</li>
-			</ul>
-			<ul class="meals-show clearfix">
-				<li>
-					<figure class="meal-photo">
-						<img src="images/5.jpg" alt="Paleo beef steak with vegetables">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/6.jpg" alt="Healthy baguette with egg and vegetables">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/7.jpg" alt="Burger with cheddar and bacon">
-					</figure>
-				</li>
-				<li>
-					<figure class="meal-photo">
-						<img src="images/8.jpg" alt="Granola with cherries and strawberries">
-					</figure>
-				</li>
-			</ul>
-		</section>
    </body>
 </html>

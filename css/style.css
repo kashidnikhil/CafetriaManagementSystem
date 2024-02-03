@@ -328,3 +328,83 @@ input[type=checkbox] {
     padding-left: 1%;
     padding-right: 1%;
 }
+
+
+/*Chaitanya CSS*/
+.mb-10 {
+	margin-bottom: 80px;
+}
+
+.header-btn {
+	text-align: right;
+}
+.custom-btn {
+	text-decoration: none;
+	background-color: #18314f;
+	padding: 10px 20px;
+	color: white;
+	vertical-align: text-bottom;
+	box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15);
+	display: inline-block;
+}
+.profile-img {
+	border-radius: 50%;
+	width: 50px;
+}
+
+.meals-show {
+	margin-bottom: 60px;
+}
+
+.quantity-field {
+	margin: 0;
+}
+
+.dashboard-menu {
+	width: 100%;
+}
+.dashboard-menu a {
+	width: 45%;
+	display: block;
+	float: left;
+}
+.dashboard-menu a div {
+	width: 100%;
+}
+.dashboard-menu a:nth-child(odd) {
+	margin-right: 10%;
+}
+
+@media (max-width: 768px) {
+	th, td {
+	    padding: 10px;
+	}
+
+	.mb-10 {
+		margin-bottom: 40px;
+	}
+
+	.row .col.span-1-of-4, .row .col.span-1-of-1 {
+		width: 90%;
+		margin: 10px 5% 10px 5%;
+	}
+
+	.quantity-field {
+		max-width: 100px;
+	}
+
+	.meals-show li {
+		width: 50%;
+	}
+
+	.meals-show {
+		margin-bottom: 40px;
+	}
+
+	.dashboard-menu a {
+		width: 100%;
+	}
+	.dashboard-menu a:nth-child(odd) {
+		margin-right: 0;
+	}
+}

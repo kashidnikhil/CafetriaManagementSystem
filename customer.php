@@ -38,19 +38,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>VIT Canteen</title>
-    <link
-      href="https://fonts.googleapis.com/css?family=Poppins:400,600,700"
-      rel="stylesheet"
-    />
-
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    
-
-</head>
+    <link rel="stylesheet" href="css/index.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
 
   <body>
 
@@ -65,7 +59,7 @@
   
           <div class="column2">
                      <div class="content2">
-                    <h1>Login</h1>
+                    <h1 class="mt-0">Login</h1>
                     <div class="card">
                         <nav class="nav-extended btncolor">
                             
@@ -76,18 +70,18 @@
                             </div>
                           </nav>
                         
-                          <div id="test1" class="col s12">
+                          <div id="test1" class="col s12 p-15">
                             <div>&nbsp;</div>
                               <div class="row">
                                   <form class="col s12" method="POST" action = "">
                                     <div class="row">
-                                      <div class="input-field col s6 offset-s3">
+                                      <div class="input-field col s12">
                                         <input id="uname" type="text" class="validate" name="uname" required>
                                         <label for="uname">Username</label>
                                       </div>
                                     </div>
                                     <div class="row">
-                                        <div class="input-field col s6 offset-s3">
+                                        <div class="input-field col s12">
                                           <input id="pwd" type="password" class="validate" name="pwd" required>
                                           <label for="pwd">Password</label>
                                         </div>
@@ -109,10 +103,7 @@
 
   
 
-    </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
+    </div>    
     
     <script>
 

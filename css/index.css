@@ -21,13 +21,16 @@ body{
     text-align: left;
   }
 #loginimg{
-    width: 500px;
+    width: 100%;
 }
 .btncolor{
     background-color: #18314f;
 }
 h1{
     font-size: 40px;
+}
+h2 {
+    font-size: 36px;
 }
 .content2{
     padding-top: 0%;
@@ -43,28 +46,79 @@ h1{
     width: 50%;
     margin: auto;
     text-align: center;
-  }
-    
-  .myrow{
-   margin: 0 -5px;
-   margin-top: ;
-  }
-  .myrow:after{
+}
+
+.myrow{
+    margin: 0 -5px;
+    margin-top: ;
+}
+.myrow:after{
     content: "";
     display:table;
     clear: both;
-  }
+}
 .mycontainer{
     padding: 5%;
-    margin: auto;
-    margin-top:5%; 
-    width:80%;
+    margin: 3% auto; 
+    width: 80%;
     background-color:white;
-    height:600px;
+    /*height:600px;*/
     overflow-y: hidden;
     border-radius: 20px;
 }
 img{
-    height:500px;
-    width: 600px;
+    width: 100%;
+}
+
+.btn-group {
+    text-align: center;
+}
+.btn-group a.btn:not(:last-child) {
+    margin-right: 10px;
+}
+
+.input-field {
+    width: 100%;
+    max-width: 300px;
+    margin-left: 50% !important;
+    transform: translateX(-50%);
+}
+
+.p-15 {
+    padding: 15px;
+}
+
+.col .row:not(:last-child) {
+    margin-bottom: 0;
+}
+
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 28px;
+    }
+
+    .mycontainer {
+        width: 90%;
+    }
+
+    .column1, .column2 {
+        width: 100%;
+    }
+
+    .column1 {
+        float: right;
+    }
+
+    .column2 {
+
+    }
+
+    .mt-0 {
+        margin-top: 0;
+    }
 }

@@ -8,21 +8,23 @@
 ?>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <title>Student</title>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/grid.css">
-        <title>Student</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         <section class="section-plans">
             <div class="row">
-                <div class="col span-10-of-12">
-                    <img src="images/person.png" style="border-radius: 20%; width: 5vw;">
+                <div class="col span-6-of-12">
+                    <img src="images/person.png" class="profile-img">
                     <div style="display: inline-block; vertical-align: super"><?php echo $row['name']?><br><?php echo $row['custid']?></div>
                 </div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="profile.php">Profile</a></div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="index.php">Logout</a></div>
-
+                <div class="col span-6-of-12 header-btn">
+                    <a href="profile.php" class="custom-btn">Profile</a>
+                    <a href="index.php" class="custom-btn">Logout</a>
+                </div>
             </div>
         </section>
         <section class="section-cant" id="cities">
@@ -105,31 +107,28 @@
                 <h2>DASHBOARD</h2>
             </div>
             <div class="row">
-                <a style="text-decoration: none; color:#18314f;" href="stordstat.php">
-                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
-                        VIEW TODAY'S ORDERS
-                    </div>
-                </a>
-                <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                <a style="text-decoration: none; color: white;" href="stordview.php">
-                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                        ORDER HISTORY
-                    </div>
-                </a>
-            </div>
-            <div class="row">
-                <a style="text-decoration: none; color: white;" href="givefeed.php">
-                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                        GIVE FEEDBACK
-                    </div>
-                </a>
-                <div class="col">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                <a style="text-decoration: none; color:#18314f;" href="viewfeed.php">
-                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
-                        VIEW FEEDBACK
-                    </div>
-                </a>
-                
+                <div class="col span-1-of-1 dashboard-menu">
+                    <a style="text-decoration: none; color:#18314f;" href="stordstat.php">
+                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
+                            VIEW TODAY'S ORDERS
+                        </div>
+                    </a>
+                    <a style="text-decoration: none; color: white;" href="stordview.php">
+                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
+                            ORDER HISTORY
+                        </div>
+                    </a>
+                    <a style="text-decoration: none; color: white;" href="givefeed.php">
+                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
+                            GIVE FEEDBACK
+                        </div>
+                    </a>
+                    <a style="text-decoration: none; color:#18314f;" href="viewfeed.php">
+                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
+                            VIEW FEEDBACK
+                        </div>
+                    </a>
+                </div>                
             </div>
         </section>
    </body>
