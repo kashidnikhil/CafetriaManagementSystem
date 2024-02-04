@@ -71,6 +71,7 @@
                 <form method="post" id="sjt" name="sjt" action="<?php $_PHP_SELF ?>">
                 <table style="font-family: 'Lato','Arial', sans-serif;">
                     <tr>
+                        <td style="width: 70px;"></td>
                         <td width=150><strong>Item</strong></td>
                         <td width=15><strong>Price (in Rs)</strong></td>
                         <td width=15><strong>Quantity</strong></td>
@@ -79,7 +80,7 @@
                         $ala = "SELECT * from sjtalacarte";
                         $res = mysqli_query($db,$ala);
                         while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)){
-                            echo "<tr><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"></td>";
+                            echo "<tr><td><img src=\"images\\".$item['image']."\"/></td><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"></td>";
                         }
                         if(isset($_POST['Submit'])){
                             $ala = "SELECT * from sjtalacarte";
