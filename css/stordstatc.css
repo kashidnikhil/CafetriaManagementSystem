@@ -10,7 +10,7 @@ html, body {
     color: #555;
     font-family: 'Lato','Arial', sans-serif;
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18px;
     text-rendering: optimizeLegibility;
 	overflow-x: hidden;
 }
@@ -327,4 +327,91 @@ input[type=checkbox] {
     padding-top: 0.5%;
     padding-left: 1%;
     padding-right: 1%;
+}
+
+
+/*Chaitanya CSS*/
+.mb-10 {
+	margin-bottom: 80px;
+}
+
+.header-btn {
+	text-align: right;
+}
+.custom-btn {
+	text-decoration: none;
+	background-color: #18314f;
+	padding: 10px 20px;
+	color: white;
+	vertical-align: text-bottom;
+	box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15);
+	display: inline-block;
+}
+.profile-img {
+	border-radius: 50%;
+	width: 50px;
+}
+
+.dashboard-menu {
+	width: 100%;
+}
+.dashboard-menu a {
+	width: 45%;
+	display: block;
+	float: left;
+}
+.dashboard-menu a div {
+	width: 100%;
+}
+.dashboard-menu a:nth-child(odd) {
+	margin-right: 10%;
+}
+
+
+.max-table {
+	width: 100%;
+	overflow-x: auto;
+}
+.max-table table {
+	min-width: 800px;
+}
+
+.fix-table {
+	width: 100%;
+}
+.fix-table table {
+	width: 100%;
+}
+
+.mx-auto {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	float: none !important;
+}
+
+
+@media (max-width: 768px) {
+	html, body {
+		font-size: 16px;
+	}
+	
+	th, td {
+	    padding: 10px;
+	}
+
+	.mb-10 {
+		margin-bottom: 40px;
+	}
+
+	.row .col.span-1-of-1 {
+		width: 90%;
+		margin: 10px 5% 10px 5%;
+	}
+
+	.dashboard-menu a {
+		width: 100%;
+	}
+	.dashboard-menu a:nth-child(odd) {
+		margin-right: 0;
+	}
 }

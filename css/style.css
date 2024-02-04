@@ -10,7 +10,7 @@ html, body {
     color: #555;
     font-family: 'Lato','Arial', sans-serif;
     font-weight: 300;
-    font-size: 20px;
+    font-size: 18px;
     text-rendering: optimizeLegibility;
 	overflow-x: hidden;
 }
@@ -231,6 +231,7 @@ tr:hover {background-color: rgba(24, 49, 79, 0.21);}
 /*----------SECTION PLANS----------*/
 
 .section-plans {
+	padding: 1%;
 	background-color: rgba(24, 49, 79, 0.1);
 }
 
@@ -375,7 +376,32 @@ input[type=checkbox] {
 	margin-right: 10%;
 }
 
+.custom-form label {
+	min-width: 150px;
+    display: inline-block;
+}
+
+.custom-form input:not([type=submit]), .custom-form select {
+	width:60vw;
+}
+
+.reviews .row {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.canteen-reviews {
+	max-width: 500px;
+	margin-left: 15vw;
+	width: 70vw;
+}
+
+
+
 @media (max-width: 768px) {
+	html, body {
+		font-size: 16px;
+	}
+
 	th, td {
 	    padding: 10px;
 	}
@@ -406,5 +432,18 @@ input[type=checkbox] {
 	}
 	.dashboard-menu a:nth-child(odd) {
 		margin-right: 0;
+	}
+
+	.custom-form label {
+		width: 100%;
+		display: block;
+	}
+	.custom-form input:not([type=submit]), .custom-form select {
+		width:86vw;
+	}
+	.canteen-reviews {
+		max-width: 500px;
+		margin-left: 5vw;
+		width: 86vw;
 	}
 }
