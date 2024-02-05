@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php 
+    include('sessionemp.php');
+?>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -72,18 +75,25 @@
             <table>
                 <thead>
                     <tr>
-                        <th class="quantity">Q.</th>
-                        <th class="description">Description</th>
-                        <th class="price">$$</th>
+                        <th class="description">Item</th>
+                        <th class="quantity">Qty</th>
+                        <th class="price">Price</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <?php
+                        $data = $_SESSION['print_data'];
+                        foreach($data as $row) {
+                    ?>
                     <tr>
-                        <td class="quantity">1.00</td>
-                        <td class="description">ARDUINO UNO R3</td>
-                        <td class="price">$25.00</td>
+                        <td class="description"><?= $row['name'] ?></td>
+                        <td class="quantity"><?= $row['qty'] ?></td>
+                        <td class="price">Rs. <?= $row['price'] ?></td>
                     </tr>
-                    <tr>
+                    <?php
+                        }
+                    ?>
+                    <!-- <tr>
                         <td class="quantity">2.00</td>
                         <td class="description">JAVASCRIPT BOOK</td>
                         <td class="price">$10.00</td>
@@ -97,19 +107,22 @@
                         <td class="quantity"></td>
                         <td class="description">TOTAL</td>
                         <td class="price">$55.00</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
             <p class="centered">Thanks for your purchase!
                 <br>parzibyte.me/blog</p>
         </div>
-        <button id="btnPrint" class="hidden-print">Print</button>
+        <!-- <button id="btnPrint" class="hidden-print">Print</button> -->
         
         <script>
-            const $btnPrint = document.querySelector("#btnPrint");
-            $btnPrint.addEventListener("click", () => {
-                window.print();
-            });
+            window.print();
+            // const $btnPrint = document.querySelector("#btnPrint");
+            // $btnPrint.addEventListener("click", () => {
+            //     window.print();
+            // });
+            setTimeout(() => { window.location.href="http://localhost/canteen-master/emphome.php" }, 2000);
         </script>
+        
     </body>
 </html>

@@ -46,6 +46,8 @@
                         $det = mysqli_fetch_array($res,MYSQLI_ASSOC);
                         $q = "SELECT * from orderdet where oid='$oid'";
                         $r = mysqli_query($db,$q);
+                        $printData = [];
+
                         while($item = mysqli_fetch_array($r,MYSQLI_ASSOC)){
                             $iid = $item['iid'];
                             if($det['cid']==919){
@@ -53,37 +55,69 @@
                                 $quer = mysqli_query($db,$s);
                                 $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                 echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                $printData[] = [
+                                    'name' => $ala['name'],
+                                    'qty' => $item['qty'],
+                                    'price' => $item['qty']*$ala['price']
+                                ];
                             }
                             else if($det['cid']==943){
                                 $s = "select * from dcalacarte where iid='$iid'";
                                 $quer = mysqli_query($db,$s);
                                 $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                 echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                $printData[] = [
+                                    'name' => $ala['name'],
+                                    'qty' => $item['qty'],
+                                    'price' => $item['qty']*$ala['price']
+                                ];
                             }
                             else if($det['cid']==2015){
                                 $s = "select * from nacalacarte where iid='$iid'";
                                 $quer = mysqli_query($db,$s);
                                 $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                 echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                $printData[] = [
+                                    'name' => $ala['name'],
+                                    'qty' => $item['qty'],
+                                    'price' => $item['qty']*$ala['price']
+                                ];
                             }
                             else if($det['cid']==2038){
                                 $s = "select * from acalacarte where iid='$iid'";
                                 $quer = mysqli_query($db,$s);
                                 $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                 echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                $printData[] = [
+                                    'name' => $ala['name'],
+                                    'qty' => $item['qty'],
+                                    'price' => $item['qty']*$ala['price']
+                                ];
                             }
                             else{
                                 $s = "select * from dalacarte where iid='$iid'";
                                 $quer = mysqli_query($db,$s);
                                 $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                 echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                $printData[] = [
+                                    'name' => $ala['name'],
+                                    'qty' => $item['qty'],
+                                    'price' => $item['qty']*$ala['price']
+                                ];
                             }
                         }
+
+                        $_SESSION['print_data'] = $printData;
+
                         if(isset($_POST['Submit'])){
                             if($_POST['rating']==0){
                                 $l = "update ord set status='Processing', eid='$eid' where oid='$oid'";
                                 $ret = mysqli_query($db,$l);
-                                header('Location: emphome.php');
+                                ?>
+                                <script>
+                                    window.location.href = 'http://localhost/canteen-master/thermal-print.php?oid=<?= $_GET['oid'] ?>';
+                                </script>
+                                <?php
                             }
                             else{
                                 $l = "update ord set status='Cancelled', eid='$eid' where oid='$oid'";
