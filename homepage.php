@@ -27,7 +27,7 @@
                 </div>
             </div>
         </section>
-        <section class="section-cant" id="cities">
+        <!-- <section class="section-cant" id="cities">
             <div class="row">
             <br><br><br>
                 <h2>Our Canteens</h2>
@@ -101,6 +101,81 @@
                     &nbsp;
                  </div>
             </div>
+        </section> -->
+        <section class="section-cant">
+            <div class="row">
+                <h2>ALAcarte</h2>
+            </div>
+            <div class="row">
+                <form method="post" id="sjt" name="sjt" action="<?php $_PHP_SELF ?>">
+                <table style="font-family: 'Lato','Arial', sans-serif;">
+                    <tr>
+                        <td style="width: 70px;"></td>
+                        <td width=150><strong>Item</strong></td>
+                        <td width=15><strong>Price (in Rs)</strong></td>
+                        <td width=15><strong>Quantity</strong></td>
+                    </tr>
+                    <?php
+                        $ala = "SELECT * from sjtalacarte";
+                        $res = mysqli_query($db,$ala);
+                        while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)){
+                            echo "<tr><td><img src=\"images\\".$item['image']."\"/></td><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><div class=\"quantity-counter\"><button class=\"dec-btn\">-</button><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"><button class=\"inc-btn\">+</button></div></td>";
+                        }
+                        if(isset($_POST['Submit'])){
+                            $ala = "SELECT * from sjtalacarte";
+                            $res = mysqli_query($db,$ala);
+                            $x = 0;
+                            while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)){
+                                $it = $item['iid'];
+                                $pr = $item['price'];
+                                if($_POST[$it]!=NULL){
+                                    $ord[$x]=$it;
+                                    $pri[$x]=$pr;
+                                    $qty[$x++]=$_POST[$it];
+                                }
+                            }
+                            $cost = 0;
+                            for($y=0;$y<$x;$y++){
+                                $cost = $cost+$pri[$y]*$qty[$y];
+                            }
+                            if($row['wallet']>=$cost){
+                                echo "<script>alert('Order Placed!');</script>";
+                                $date = date("Y-m-d");
+                                $cust = $row['custid'];
+                                $add = "INSERT into ord(cid,custid,odate,cost,status) values ('919','$cust','$date','$cost','Received')";
+                                $retval = mysqli_query($db,$add);
+                                $m = mysqli_query($db,"select max(oid) from ord");
+                                $max = mysqli_fetch_array($m,MYSQLI_ASSOC);
+                                $oid = $max['max(oid)'];
+                                for($y=0;$y<$x;$y++){
+                                    $add = "insert into orderdet values('$oid','$ord[$y]','$qty[$y]')";
+                                    $retval = mysqli_query($db,$add);
+                                }
+                                $balance=$row['wallet']-$cost;
+                                $add="update customer set wallet='$balance' where custid='$cust'";
+                                $retval = mysqli_query($db,$add);
+                            }
+                            else{
+                                echo "<script>alert('Not enough Balance in your wallet');</script>";
+                            }
+                        }
+                    ?>
+                </table>
+                <div class="section-plans">
+                <div class="row">
+                <a style="text-decoration: none; color:#18314f;" href="homepage.php">
+                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">
+                        GO BACK
+                    </div>
+                </a>
+                <div class="col"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+                    <button class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;" type="submit" id="Submit" name="Submit" for="sjt">
+                        CONTINUE
+                    </button>
+                </div>
+                </div>
+                </form>
+            </div>
         </section>
         <section class="section-plans">
             <div class="row">
@@ -131,5 +206,35 @@
                 </div>                
             </div>
         </section>
+
+        <script>
+            $(document).ready(function(){
+                $(".quantity-counter .inc-btn").click(function(e){
+                    e.preventDefault();
+                    let curVal = $(this).siblings("input").val();
+
+                    if(curVal == "") {
+                        curVal = 1;
+                    } else {
+                        curVal = parseInt(curVal) + 1;
+                    }
+
+                    $(this).siblings("input").val(curVal);
+                });
+
+                $(".quantity-counter .dec-btn").click(function(e){
+                    e.preventDefault();
+                    let curVal = $(this).siblings("input").val();
+
+                    if(curVal > 1) {
+                        curVal = parseInt(curVal) - 1;
+                    } else {
+                        curVal = "";
+                    }
+
+                    $(this).siblings("input").val(curVal);
+                });
+            });
+        </script>
    </body>
 </html>

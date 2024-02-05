@@ -401,6 +401,26 @@ table td img {
 	object-position: center;
 }
 
+.quantity-counter {
+	display: inline-flex;
+	align-items: center;
+}
+.quantity-counter .quantity-field {
+	width: 40px;
+	font-size: 16px;
+	text-align: center;
+	pointer-events: none;
+}
+.quantity-counter button {
+	font-size: 20px;
+    background: transparent;
+    border: none;
+    padding: 5px;
+    width: 25px;
+    text-align: center;
+    cursor: pointer;
+}
+
 
 @media (max-width: 768px) {
 	html, body {
