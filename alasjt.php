@@ -9,6 +9,7 @@
 <html>
     <head>
         <title>SJT Canteen</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/grid.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -103,7 +104,8 @@
                                 echo "<script>alert('Order Placed!');</script>";
                                 $date = date("Y-m-d");
                                 $cust = $row['custid'];
-                                $add = "INSERT into ord(cid,custid,odate,cost,status) values ('919','$cust','$date','$cost','Received')";
+                                $note = $_POST['order_note'];
+                                $add = "INSERT into ord(cid,custid,odate,cost,note,status) values ('919','$cust','$date','$cost','$note','Received')";
                                 $retval = mysqli_query($db,$add);
                                 $m = mysqli_query($db,"select max(oid) from ord");
                                 $max = mysqli_fetch_array($m,MYSQLI_ASSOC);
@@ -122,18 +124,20 @@
                         }
                     ?>
                 </table>
+                <div class="field-wrap"><label>Note:</label><input name="order_note" id="order_note" maxlength="100"/></div>
                 <div class="section-plans">
-                <div class="row">
-                <a style="text-decoration: none; color:#18314f;" href="homepage.php">
-                    <div class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">
-                        GO BACK
+                    <div class="row">
+                        <div class="col span-1-of-1 dashboard-menu">
+                            <a style="text-decoration: none; color:#18314f;" href="homepage.php">
+                                <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">
+                                    GO BACK
+                                </div>
+                            </a>
+                            <button type="submit" id="Submit" name="Submit" style="border: 0;" for="sjt">
+                                <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">CONTINUE</div>
+                            </button>
+                        </div>
                     </div>
-                </a>
-                <div class="col"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
-                    <button class="col span-5-of-11" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;" type="submit" id="Submit" name="Submit" for="sjt">
-                        CONTINUE
-                    </button>
-                </div>
                 </div>
                 </form>
             </div>

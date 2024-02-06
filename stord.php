@@ -10,6 +10,7 @@
 <html>
     <head>
         <title>Student</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="css/grid.css">
         <link rel="stylesheet" type="text/css" href="css/stordstatc.css">
@@ -79,9 +80,14 @@
                                 }
                             }
                         ?>
+                        <tr>
+                            <td width=15 colspan="2" style="text-align: right;">Total Price:</td>
+                            <td width=15 style="text-align: center;"><strong><?php echo $det['cost']; ?></strong></td>
+                        </tr>
                     </table>
                 </div>
-                <div style="text-align:center; margin-top: 2vw;">Total Price : <?php echo $det['cost']; ?></div>
+                <!-- <div style="text-align:center; margin-top: 2vw;">Total Price : <?php echo $det['cost']; ?></div> -->
+                <div style="text-align:center; margin-top: 2vw;"><strong>Note: </strong><?php echo $det['note']; ?></div>
             </div>
 		</section>
         <section class="section-plans">

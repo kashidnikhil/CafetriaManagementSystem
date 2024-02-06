@@ -52,6 +52,10 @@
                 max-width: 155px;
             }
 
+            table {
+                width: 100%;
+            }
+
             img {
                 width: 120px;
                 max-width: inherit;
@@ -69,15 +73,13 @@
     <body>
         <div class="ticket">
             <p class="centered"><img src="images/vit_logo.jpg" alt="Logo"></p>
-            <p class="centered">RECEIPT EXAMPLE
-                <br>Address line 1
-                <br>Address line 2</p>
+            <p class="centered">Order No: <?php echo $_SESSION['order_id']; ?></p>
             <table>
                 <thead>
                     <tr>
                         <th class="description">Item</th>
                         <th class="quantity">Qty</th>
-                        <th class="price">Price</th>
+                        <!-- <th class="price">Price</th> -->
                     </tr>
                 </thead>
                 <tbody>
@@ -88,30 +90,14 @@
                     <tr>
                         <td class="description"><?= $row['name'] ?></td>
                         <td class="quantity"><?= $row['qty'] ?></td>
-                        <td class="price">Rs. <?= $row['price'] ?></td>
+                        <!-- <td class="price">Rs. <?= $row['price'] ?></td> -->
                     </tr>
                     <?php
                         }
                     ?>
-                    <!-- <tr>
-                        <td class="quantity">2.00</td>
-                        <td class="description">JAVASCRIPT BOOK</td>
-                        <td class="price">$10.00</td>
-                    </tr>
-                    <tr>
-                        <td class="quantity">1.00</td>
-                        <td class="description">STICKER PACK</td>
-                        <td class="price">$10.00</td>
-                    </tr>
-                    <tr>
-                        <td class="quantity"></td>
-                        <td class="description">TOTAL</td>
-                        <td class="price">$55.00</td>
-                    </tr> -->
                 </tbody>
             </table>
-            <p class="centered">Thanks for your purchase!
-                <br>parzibyte.me/blog</p>
+            <p class="centered">Note: <?php echo $_SESSION['order_note']; ?></p>
         </div>
         <!-- <button id="btnPrint" class="hidden-print">Print</button> -->
         

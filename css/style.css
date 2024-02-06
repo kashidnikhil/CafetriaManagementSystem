@@ -364,15 +364,15 @@ input[type=checkbox] {
 .dashboard-menu {
 	width: 100%;
 }
-.dashboard-menu a {
+.dashboard-menu a, .dashboard-menu button {
 	width: 45%;
 	display: block;
 	float: left;
 }
-.dashboard-menu a div {
+.dashboard-menu a div, .dashboard-menu button div {
 	width: 100%;
 }
-.dashboard-menu a:nth-child(odd) {
+.dashboard-menu a:nth-child(odd), .dashboard-menu > *:nth-child(odd) {
 	margin-right: 10%;
 }
 
@@ -428,6 +428,25 @@ table td img {
 }
 
 
+.field-wrap {
+	width: 100%;
+	margin: 10px 0;
+}
+.field-wrap label {
+	width: 70px;
+	display: inline-block;
+	font-size: 18px;
+	font-weight: 500;
+	margin-right: 10px;
+}
+.field-wrap input {
+	width: calc(100% - 80px);
+	padding: 5px;
+	border: 1px solid;
+}
+
+
+
 
 @media (max-width: 768px) {
 	html, body {
@@ -455,10 +474,10 @@ table td img {
 		margin-bottom: 40px;
 	}
 
-	.dashboard-menu a {
+	.dashboard-menu a, .dashboard-menu button {
 		width: 100%;
 	}
-	.dashboard-menu a:nth-child(odd) {
+	.dashboard-menu a:nth-child(odd), .dashboard-menu > *:nth-child(odd) {
 		margin-right: 0;
 	}
 
@@ -473,5 +492,14 @@ table td img {
 		max-width: 500px;
 		margin-left: 5vw;
 		width: 86vw;
+	}
+
+	.field-wrap label {
+		width: 70px;
+		margin-right: 0;
+		margin-bottom: 5px;
+	}
+	.field-wrap input {
+		width: 100%;
 	}
 }
