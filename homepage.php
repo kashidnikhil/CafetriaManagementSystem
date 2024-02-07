@@ -172,7 +172,10 @@
                                     GO BACK
                                 </div>
                             </a>
-                            <button type="submit" id="Submit" name="Submit" style="border: 0;" for="sjt">
+                            <a href="#" id="confirmOrder" style="border: 0;">
+                                <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">CONTINUE</div>
+                            </a>
+                            <button type="submit" id="Submit" name="Submit" style="border: 0; display: none;" for="sjt">
                                 <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;">CONTINUE</div>
                             </button>
                         </div>                   
@@ -237,6 +240,14 @@
                     }
 
                     $(this).siblings("input").val(curVal);
+                });
+
+                $("a#confirmOrder").click(function(e){
+                    e.preventDefault();
+
+                    if(confirm('Do you want to place order?')) {
+                        $("button#Submit").trigger("click");
+                    }
                 });
             });
         </script>

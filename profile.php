@@ -16,15 +16,16 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
-        <section class="section-plans">
+        <section class="section-cant">
             <div class="row">
-                <div class="col span-10-of-12">
-                    <img src="images/person.png" style="border-radius: 20%; width: 5vw;">
+                <div class="col span-6-of-12">
+                    <img src="images/person.png" class="profile-img">
                     <div style="display: inline-block; vertical-align: super"><?php echo $row['name']?><br><?php echo $row['custid']?></div>
                 </div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="homepage.php">Home</a></div>
-                <div class="col span-1-of-12"><a style="text-decoration: none; background-color: #18314f; padding: 10% 20%; color: white; vertical-align: text-bottom; margin-top: 20%; margin-bottom: 20%; box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15)" href="index.php">Logout</a></div>
-
+                <div class="col span-6-of-12 header-btn">
+                    <a href="homepage.php" class="custom-btn">Home</a>
+                    <a href="index.php" class="custom-btn">Logout</a>
+                </div>
             </div>
         </section>
         <section class="section-cant">

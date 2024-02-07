@@ -14,7 +14,7 @@
         $myusername = mysqli_real_escape_string($db,$_POST['uname']);
         $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
 
-        $sql = "SELECT custid FROM sauth WHERE  custid= '$myusername' and pwd = '$mypassword'";
+        $sql = "SELECT eid FROM eauth WHERE  eid= '$myusername' and pwd = '$mypassword'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         $error="Enter details.";
@@ -25,10 +25,10 @@
         if($count == 1) {
             $_SESSION['login_user'] = $myusername;
             echo "done";
-            header("location: homepage.php");
+            header("location: emphome.php");
         }
         else {
-            echo "<script>alert('Enter correct details');window.location.href='customer.php';</script>";
+            echo "<script>alert('Enter correct login details');window.location.href='employee.php';</script>";
         }
     }
 ?>
@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="css/index.css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  </head>
+</head>
 
   <body>
 
@@ -65,7 +65,7 @@
                             
                             <div class="nav-content ">
                               <ul class="tabs tabs-transparent">
-                                <li class="tab"><a class="active">Customer</a></li>
+                                <li class="tab"><a class="active">Employee</a></li>
                               </ul>
                             </div>
                           </nav>
@@ -103,7 +103,7 @@
 
   
 
-    </div>    
+    </div>   
     
     <script>
 

@@ -42,6 +42,7 @@
                             <td width=15 style="text-align: center;"><strong>Price</strong></td>
                             <td width=15 style="text-align: center;"><strong>Canteen</strong></td>
                             <td width=15 style="text-align: center;"><strong>Status</strong></td>
+                            <td width=15 style="text-align: center;"><strong>Action</strong></td>
                         </tr>
                         <?php 
                             $un = $row['custid'];
@@ -55,12 +56,14 @@
                                     $name = mysqli_fetch_array($r,MYSQLI_ASSOC);
                                     if(strcmp($item['status'],'Cancelled')==0){
                                         echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."<td style=\"text-align: center;\">".$name['name']."</td>";
-                                        echo "<td style=\"margin:10px; background: rgba(245, 70, 70, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Cancelled</a></td>"; 
+                                        echo "<td style=\"margin:10px; background: rgba(245, 70, 70, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Cancelled</a></td>
+                                            <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>"; 
                                         echo "</tr>";                          
                                     }
                                     else if(strcmp($item['status'],'Completed')==0){
                                         echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."<td style=\"text-align: center;\">".$name['name']."</td>";
-                                        echo "<td style=\"margin:10px; background: rgba(58, 216, 51, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Completed</a></td>"; 
+                                        echo "<td style=\"margin:10px; background: rgba(58, 216, 51, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Completed</a></td>
+                                            <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>"; 
                                         echo "</tr>";
                                     }
                                 }

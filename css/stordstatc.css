@@ -438,6 +438,16 @@ table td img {
 	border: 1px solid;
 }
 
+.review-btn {
+	color: #ffffff;
+	box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15);
+	text-align: center;
+	padding: 5px 10px;
+	border: 2px solid #18314f;
+	background-color: #18314f;
+	text-decoration: none;
+}
+
 
 @media (max-width: 768px) {
 	html, body {

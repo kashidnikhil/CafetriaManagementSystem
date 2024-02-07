@@ -41,8 +41,8 @@
               <h2 class="heading">Hungry? Don't have time to stand in queue? </h2>
               <p>Use PannashGreensEats to resolve your hunger and save your precious time.</p>
               <div class="btn-group">
-                <a href="employee.php" class="waves-effect waves-light btn btncolor studentlogin">Cafeteria</a>
-                <a href="customer.php" class="waves-effect waves-light btn btncolor studentlogin">Employee</a>
+                <a href="customer.php" class="waves-effect waves-light btn btncolor studentlogin">Cafeteria</a>
+                <a href="employee.php" class="waves-effect waves-light btn btncolor studentlogin">Employee</a>
               </div>
           </div>
 

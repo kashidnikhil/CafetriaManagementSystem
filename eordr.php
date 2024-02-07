@@ -140,7 +140,7 @@
                                     $ret = mysqli_query($db,$l);
                                     ?>
                                     <script>
-                                        window.location.href = 'http://localhost/canteen-master/thermal-print.php';
+                                        window.location.href = 'thermal-print.php';
                                     </script>
                                     <?php
                                 }
