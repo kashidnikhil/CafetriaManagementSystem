@@ -448,6 +448,10 @@ table td img {
 	text-decoration: none;
 }
 
+form input:not([type=submit]), form select {
+	font-size: 16px;
+}
+
 
 @media (max-width: 768px) {
 	html, body {

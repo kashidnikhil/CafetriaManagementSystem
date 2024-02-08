@@ -32,11 +32,13 @@
             <div class="row">
                 <h2>Personal Details</h2>
             </div>
+            <ul class="profile-det">
             <?php
-                echo "<li style=\"margin-left:25vw; width:30vw;\"><strong>Wallet Balance: </strong><div style=\"float:right;\">".$row['wallet']."</div></li>";
-                echo "<li style=\"margin-left:25vw; width:30vw;\"><strong>Address: </strong><div style=\"float:right;\">".$row['hblock']." ".$row['hroom']."</div></li>";
-                echo "<li style=\"margin-left:25vw; width:30vw;\"><strong>Phone Number: </strong><div style=\"float:right;\">".$row['phone']."</div></li>";
+                echo "<li><strong>Wallet Balance: </strong>".$row['wallet']."</li>";
+                echo "<li><strong>Address: </strong>".$row['hblock']." ".$row['hroom']."</li>";
+                echo "<li><strong>Phone Number: </strong>".$row['phone']."</li>";
             ?>
+            </ul>
         </section>
         <section class="section-plans">
             <div class="row">

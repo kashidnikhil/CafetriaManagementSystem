@@ -102,12 +102,17 @@
         <!-- <button id="btnPrint" class="hidden-print">Print</button> -->
         
         <script>
-            window.print();
+            setTimeout(() => {
+                window.print();
+
+                setTimeout(() => { 
+                    window.location.href = "emphome.php" 
+                }, 2000);
+            }, 600);
             // const $btnPrint = document.querySelector("#btnPrint");
             // $btnPrint.addEventListener("click", () => {
             //     window.print();
             // });
-            setTimeout(() => { window.location.href="http://localhost/canteen-master/emphome.php" }, 2000);
         </script>
         
     </body>

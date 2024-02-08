@@ -28,7 +28,7 @@
             header("location: emphome.php");
         }
         else {
-            echo "<script>alert('Enter correct login details');window.location.href='employee.php';</script>";
+            echo "<script>alert('Enter correct login details');window.location.href='customer.php';</script>";
         }
     }
 ?>

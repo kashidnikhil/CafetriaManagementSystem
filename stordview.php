@@ -60,7 +60,19 @@
                                             <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>"; 
                                         echo "</tr>";                          
                                     }
-                                    else if(strcmp($item['status'],'Completed')==0){
+                                    else if(strcmp($item['status'],'Processing')==0){
+                                        echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."<td style=\"text-align: center;\">".$name['name']."</td>";
+                                        echo "<td style=\"margin:10px; background: rgba(245, 238, 70, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Processing</a></td>
+                                            <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>";         
+                                        echo "</tr>";                       
+                                    }
+                                    else if(strcmp($item['status'],'Received')==0){
+                                        echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."<td style=\"text-align: center;\">".$name['name']."</td>";
+                                        echo "<td style=\"margin:10px; background: rgba(180, 149, 149, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Received</a></td>
+                                            <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>"; 
+                                        echo "</tr>";                               
+                                    }
+                                    else {
                                         echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."<td style=\"text-align: center;\">".$name['name']."</td>";
                                         echo "<td style=\"margin:10px; background: rgba(58, 216, 51, 0.8);color:black; text-align: center;\"><a href='stord.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Completed</a></td>
                                             <td><a href='orderreview.php?oid=".$item['oid']."' class='review-btn'>Review</a></td>"; 
@@ -73,6 +85,7 @@
                 </div>
             </div>
         </section>
+
         <section class="section-plans">
             <div class="row">
                 <div class="col span-1-of-1 dashboard-menu">

@@ -39,6 +39,7 @@
                             <td width=15 style="text-align: center;"><strong>Item Name</strong></td>
                             <td width=15 style="text-align: center;"><strong>Quantity Date</strong></td>
                             <td width=15 style="text-align: center;"><strong>Price</strong></td>
+                            <td width=15 style="text-align: center;"><strong>Action</strong></td>
                         </tr>
                         <?php
                             $c = "select * from ord where oid='$oid'";
@@ -52,9 +53,9 @@
                                     $s = "select * from sjtalacarte where iid='$iid'";
                                     $quer = mysqli_query($db,$s);
                                     $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
-                                    echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
+                                    echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td><td><a href='itemreview.php?oid=".$item['oid']."&iid=".$iid."' class='review-btn'>Review</a></td></tr>";
                                 }
-                                else if($det['cid']==943){
+                                /*else if($det['cid']==943){
                                     $s = "select * from dcalacarte where iid='$iid'";
                                     $quer = mysqli_query($db,$s);
                                     $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
@@ -77,12 +78,13 @@
                                     $quer = mysqli_query($db,$s);
                                     $ala = mysqli_fetch_array($quer,MYSQLI_ASSOC);
                                     echo "<tr><td style=\"text-align: center;\">".$ala['name']."</td><td style=\"text-align: center;\">".$item['qty']."</td><td style=\"text-align: center;\">".$item['qty']*$ala['price']."</td></tr>";
-                                }
+                                }*/
                             }
                         ?>
                         <tr>
                             <td width=15 colspan="2" style="text-align: right;">Total Price:</td>
                             <td width=15 style="text-align: center;"><strong><?php echo $det['cost']; ?></strong></td>
+                            <td></td>
                         </tr>
                     </table>
                 </div>

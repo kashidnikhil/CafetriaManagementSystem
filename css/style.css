@@ -445,7 +445,19 @@ table td img {
 	border: 1px solid;
 }
 
+form input:not([type=submit]), form select {
+	font-size: 16px;
+}
 
+.profile-det {
+	max-width: 400px;
+	margin: 20px auto;
+}
+.profile-det strong {
+	display: inline-block;
+	width: 160px;
+	margin-right: 10px;
+}
 
 
 @media (max-width: 768px) {

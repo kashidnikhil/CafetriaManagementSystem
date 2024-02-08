@@ -60,10 +60,10 @@
                             <td width=15 style="text-align: center;"><strong>Status</strong></td>
                         </tr>
                         <?php 
-                            $al = "select * from ord where cid='$cid'";
+                            $al = "select * from ord where cid='$cid' and status='Received'";
                             $res = mysqli_query($db,$al);
                             while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)) {
-                                if(strcmp($item['odate'],date("Y-m-d"))==0){
+                                //if(strcmp($item['odate'],date("Y-m-d"))==0){
                                     if(strcmp($item['status'],'Received')==0){
                                         echo "<tr><td style=\"text-align: center;\">".$item['oid']."<td style=\"text-align: center;\">".$item['odate']."<td style=\"text-align: center;\">".$item['cost']."</td>";
                                         echo "<td style=\"margin:10px; background: rgba(180, 149, 149, 0.8);color:black; text-align: center;\"><a href='eordr.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Received</a></td>";
@@ -74,7 +74,7 @@
                                         echo "<td style=\"margin:10px; background: rgba(245, 238, 70, 0.8);color:black; text-align: center;\"><a href='eordp.php?oid=".$item['oid']."' style=\"text-decoration:none; color:black;\">Processing</a></td>"; 
                                         echo "</tr>";                               
                                     } 
-                                }
+                                //}
                             }
                         ?>
                     </table>

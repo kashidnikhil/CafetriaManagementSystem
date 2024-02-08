@@ -46,13 +46,16 @@
                               move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
                             }
 
+                            $itemId = $_GET['iid'];
+                            $orderID = $_GET['oid'];
                             $image = $file_name;
                             $rating = $_POST['rating'];
                             $review = $_POST['comment'];
                             $rdate = date('Y-m-d');
 
-                            $add = "UPDATE ord SET image='$image', rating='$rating', review='$review', rdate='$rdate' WHERE oid=".$_GET['oid'];
+                            $add = "INSERT into item_review(item_id,ord_id,rating,image,review,date) values ($itemId,$orderID,$rating,'$image','$review','$rdate')";
                             $retval = mysqli_query($db,$add);
+
                         ?>
                         <script>
                             alert("Review submitted successfully.");
