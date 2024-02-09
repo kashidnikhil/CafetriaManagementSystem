@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <?php 
     include('sessioncust.php');
+
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from customer where custid='$uname'";
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-
-    //echo mail("cssonawane32@gmail.com","My subject","text");
 ?>
 <html>
     <head>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php 
     include('sessioncust.php');
+    include('sendmail.php');
+
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from customer where custid='$uname'";
     $result = mysqli_query($db,$sql);
@@ -53,6 +55,14 @@
 
                             $add = "UPDATE ord SET image='$image', rating='$rating', review='$review', rdate='$rdate' WHERE oid=".$_GET['oid'];
                             $retval = mysqli_query($db,$add);
+
+                            $mailBody = "
+                            Order No.: ".$_GET['oid']."<br/>
+                            Review: $review<br/>
+                            Rating: $rating<br/>
+                            <img src='' style='width: 200px'/>";
+
+                            sendMail("cssonawane32@gmail.com", "Review From Order No-".$_GET['oid'], $mailBody);
                         ?>
                         <script>
                             alert("Review submitted successfully.");

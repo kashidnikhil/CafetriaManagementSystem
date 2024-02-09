@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <?php 
     include('sessioncust.php');
+    include('sendmail.php');
+
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from customer where custid='$uname'";
     $result = mysqli_query($db,$sql);
@@ -56,6 +58,18 @@
                             $add = "INSERT into item_review(item_id,ord_id,rating,image,review,date) values ($itemId,$orderID,$rating,'$image','$review','$rdate')";
                             $retval = mysqli_query($db,$add);
 
+                            $ala = "SELECT * FROM sjtalacarte WHERE iid=".$_GET['iid'];
+                            $res = mysqli_query($db,$ala);
+                            $row = mysqli_fetch_array($res, MYSQLI_ASSOC);
+
+                            $mailBody = "
+                            Order No.: $orderID<br/>
+                            Item Name: ".$row['name']."<br/>
+                            Review: $review<br/>
+                            Rating: $rating<br/>
+                            <img src='' style='width: 200px'/>";
+
+                            sendMail("cssonawane32@gmail.com", "Review for ".$row['name']." From Order No-".$_GET['oid'], $mailBody);
                         ?>
                         <script>
                             alert("Review submitted successfully.");
