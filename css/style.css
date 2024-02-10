@@ -336,6 +336,12 @@ input[type=checkbox] {
 	margin-bottom: 80px;
 }
 
+.mx-auto {
+	margin-left: auto !important;
+	margin-right: auto !important;
+	float: none !important;
+}
+
 .header-btn {
 	text-align: right;
 }
@@ -457,6 +463,20 @@ form input:not([type=submit]), form select {
 	display: inline-block;
 	width: 160px;
 	margin-right: 10px;
+}
+
+#rating-star {
+	display: inline-block;
+}
+
+#rating-star span.active {
+  color: orange;
+}
+
+#rating-star span {
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 7px;
 }
 
 
