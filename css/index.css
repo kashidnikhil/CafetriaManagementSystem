@@ -38,9 +38,9 @@ h2 {
 #mysection{
     transition: transform 0.6s ease;
 }
-.card{
+/*.card{
     height:380px;
-}
+}*/
 .column2{
     float:left;
     width: 50%;
@@ -90,6 +90,26 @@ img{
 
 .col .row:not(:last-child) {
     margin-bottom: 0;
+}
+
+.input-field {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+#verify-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
 }
 
 

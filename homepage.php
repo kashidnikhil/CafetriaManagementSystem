@@ -121,7 +121,7 @@
                         $ala = "SELECT * from sjtalacarte";
                         $res = mysqli_query($db,$ala);
                         while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)){
-                            echo "<tr><td><img src=\"images\\".$item['image']."\"/></td><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><div class=\"quantity-counter\"><button class=\"dec-btn\">-</button><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"><button class=\"inc-btn\">+</button></div></td>";
+                            echo "<tr><td><img src=\"uploads\\".$item['image']."\"/></td><td>".$item['name']."</td><td>".$item['price']."</td><td align=\"center\"><div class=\"quantity-counter\"><button class=\"dec-btn\">-</button><input type=\"numeric\" class=\"btnsmall quantity-field\" id=\"".$item['iid']."\" name =\"".$item['iid']."\"><button class=\"inc-btn\">+</button></div></td>";
                         }
                         if(isset($_POST['Submit'])){
                             $ala = "SELECT * from sjtalacarte";

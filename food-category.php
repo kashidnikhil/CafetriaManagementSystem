@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php 
-    include('sessionemp.php');
+    include('sessioncust.php');
+
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from employee where eid='$uname'";
     $result = mysqli_query($db,$sql);
@@ -8,14 +9,16 @@
 ?>
 <html>
     <head>
-        <title>Student</title>
+        <title>SJT Canteen</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/grid.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
-        <section class="section-cant">
+        <section class="section-plans">
             <div class="row">
                 <div class="col span-6-of-12">
                     <?php       
@@ -40,70 +43,49 @@
                 </div>
             </div>
         </section>
-        <section class="section-cant" id="cities">
+        <section class="section-cant">
             <div class="row">
-            <br><br><br>
-                <h2>Best Employee</h2>
+                <h2>Food Category</h2>
             </div>
             <div class="row">
-                <div class="row">
-                    <?php 
-                        $q = "select max(jo) from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t";
-                        $m = mysqli_query($db,$q);
-                        $cost = mysqli_fetch_array($m, MYSQLI_ASSOC);
-                        $qb = "select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid";
-                        $mb = mysqli_query($db,$qb);
-                        while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                            if ($cost['max(jo)']==$item['jo']){
-                                $eid = $item['eid'];
-                                $name = "select * from employee where eid='$eid'";
-                                $r = mysqli_query($db,$name);
-                                $nm = mysqli_fetch_array($r,MYSQLI_ASSOC);
-                                $cid = $nm['cid'];
-                                $c = "select name from canteen where cid=".$cid."";
-                                $s = mysqli_query($db,$c);
-                                $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
-                                echo "<li style=\"margin-left:30vw;\">Name of employee : ".$nm['name']."</li><li style=\"margin-left:30vw;\"> Canteen : ".$cant['name']."</li><li style=\"margin-left:30vw;\"> Average sale : ".round($cost['max(jo)'])."</li><br><br>";
+                <form method="post" id="sjt" name="sjt" class="custom-form" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+                    <?php
+                        if(isset($_POST['Submit'])){
+                            $target_dir = "uploads/";
+                            $extension = explode(".", $_FILES["image"]["name"]);
+                            $file_name = time(). "." .end($extension);
+                            $target_file = $target_dir . $file_name;
+
+                            if ($_FILES["image"]["name"]) {
+                              move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                            }
+
+                            $category = $_POST['category'];
+                            $image = $file_name;
+
+                            $add = "INSERT into food_category(category,image) values ('$category','$image')";
+                            $retval = mysqli_query($db,$add);
+                            if($retval) {
+                        ?>
+                        <script>
+                            alert("Category added successfully.");
+                            window.location.href="food-category-list.php";
+                        </script>
+                    <?php
                             }
                         }
                     ?>
-                </div>
-            </div>
-            <div class="row">
-            <br><br><br>
-                <h2>Leaderboard</h2>
-            </div>
-            <div class="row">
-                <div class="row">
-                    <table>
-                        <tr>
-                            <td width=15><strong>Name of Employee</strong></td>
-                            <td width=15><strong>Canteen</strong></td>
-                            <td width=15><strong>Average Sale</strong></td>
-                        </tr>
-                    <?php 
-                        $qb = "select * from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t order by jo desc";
-                        $mb = mysqli_query($db,$qb);
-                        while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                            $eid = $item['eid'];
-                            $name = "select * from employee where eid='$eid'";
-                            $r = mysqli_query($db,$name);
-                            $nm = mysqli_fetch_array($r,MYSQLI_ASSOC);
-                            $cid = $nm['cid'];
-                            $c = "select name from canteen where cid=".$cid."";
-                            $s = mysqli_query($db,$c);
-                            $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
-                            echo "<tr><td>".$nm['name']."</td><td>".$cant['name']."</td><td>".round($item['jo'])."</td></tr>";
-                        }
-                    ?>
-                    </table>
-                </div>
+                    <label for="image" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Image</label>
+                    <input type="file" id="image" name="image" style="margin:2vw 4vw;" required>
+                    <br>
+                    <label for="category" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Category</label>
+                    <input type="text" id="category" name="category" style="margin:2vw 4vw;" required>
+                    <br>
+                    <input type="submit" for="sjt" value="Submit" id="Submit" name="Submit" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;margin-left:35vw; margin-botton:4vw;"><br>
+                </form>
             </div>
         </section>
         <section class="section-plans">
-            <div class="row">
-                <h2>DASHBOARD</h2>
-            </div>
             <div class="row">
                 <div class="col span-1-of-1 dashboard-menu">
                     <a style="text-decoration: none; color:#18314f;" href="emordstat.php">

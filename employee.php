@@ -58,38 +58,39 @@
           </div>
   
           <div class="column2">
-                     <div class="content2">
-                    <h1 class="mt-0">Login</h1>
-                    <div class="card">
-                        <nav class="nav-extended btncolor">
-                            
-                            <div class="nav-content ">
-                              <ul class="tabs tabs-transparent">
-                                <li class="tab"><a class="active">Customer</a></li>
-                              </ul>
-                            </div>
-                          </nav>
-                        
-                          <div id="test1" class="col s12 p-15">
-                            <div>&nbsp;</div>
-                              <div class="row">
-                                  <form class="col s12" method="POST" action = "">
-                                    <div class="row">
-                                      <div class="input-field col s12">
-                                        <input id="uname" type="text" class="validate" name="uname" required>
-                                        <label for="uname">Username</label>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                          <input id="pwd" type="password" class="validate" name="pwd" required>
-                                          <label for="pwd">Password</label>
-                                        </div>
-                                      </div>
-                                      <input type="submit" value="LOGIN" class="waves-effejct waves-light btn btncolor center studentlogin">
-                                  </form>
-                                </div>                             
+            <div class="content2">
+              <h1 class="mt-0">Login</h1>
+              <div class="card">
+                <nav class="nav-extended btncolor">
+                    
+                  <div class="nav-content ">
+                    <ul class="tabs tabs-transparent">
+                      <li class="tab"><a class="active">Customer</a></li>
+                    </ul>
+                  </div>
+                </nav>
+              
+                <div id="test1" class="col s12 p-15">
+                  <div>&nbsp;</div>
+                    <div class="row">
+                      <form class="col s12" method="POST" action = "">
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="uname" type="text" class="validate" name="uname" required>
+                            <label for="uname">Username</label>
                           </div>
+                        </div>
+                        <div class="row">
+                          <div class="input-field col s12">
+                            <input id="pwd" type="password" class="validate" name="pwd" required>
+                            <label for="pwd">Password</label>
+                          </div>
+                        </div>
+                        <input type="submit" value="LOGIN" class="waves-effejct waves-light btn btncolor center studentlogin">
+                      </form>
+                      <p>If you don't have account, <a href="register-customer.php">Register here</a>.</p>
+                    </div>                             
+                </div>
               </div>
             </div>
           </div>
@@ -99,9 +100,7 @@
 
     </section>
 
-    <div>&nbsp;</div>
-
-  
+    <div>&nbsp;</div> 
 
     </div>    
     

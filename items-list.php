@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+i<!DOCTYPE html>
 <?php 
     include('sessionemp.php');
     $uname = $_SESSION['login_user'];
@@ -43,43 +43,14 @@
         <section class="section-cant" id="cities">
             <div class="row">
             <br><br><br>
-                <h2>Best Employee</h2>
-            </div>
-            <div class="row">
-                <div class="row">
-                    <?php 
-                        $q = "select max(jo) from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t";
-                        $m = mysqli_query($db,$q);
-                        $cost = mysqli_fetch_array($m, MYSQLI_ASSOC);
-                        $qb = "select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid";
-                        $mb = mysqli_query($db,$qb);
-                        while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                            if ($cost['max(jo)']==$item['jo']){
-                                $eid = $item['eid'];
-                                $name = "select * from employee where eid='$eid'";
-                                $r = mysqli_query($db,$name);
-                                $nm = mysqli_fetch_array($r,MYSQLI_ASSOC);
-                                $cid = $nm['cid'];
-                                $c = "select name from canteen where cid=".$cid."";
-                                $s = mysqli_query($db,$c);
-                                $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
-                                echo "<li style=\"margin-left:30vw;\">Name of employee : ".$nm['name']."</li><li style=\"margin-left:30vw;\"> Canteen : ".$cant['name']."</li><li style=\"margin-left:30vw;\"> Average sale : ".round($cost['max(jo)'])."</li><br><br>";
-                            }
-                        }
-                    ?>
-                </div>
-            </div>
-            <div class="row">
-            <br><br><br>
-                <h2>Leaderboard</h2>
+                <h2>Food Items</h2>
             </div>
             <div class="row">
                 <div class="row">
                     <table>
                         <tr>
-                            <td width=15><strong>Name of Employee</strong></td>
-                            <td width=15><strong>Canteen</strong></td>
-                            <td width=15><strong>Average Sale</strong></td>
+                            <td width=15><strong>Category</strong></td>
+                            <td width=15><strong>Image</strong></td>
                         </tr>
                     <?php 
                         $qb = "select * from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t order by jo desc";
@@ -93,7 +64,7 @@
                             $c = "select name from canteen where cid=".$cid."";
                             $s = mysqli_query($db,$c);
                             $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
-                            echo "<tr><td>".$nm['name']."</td><td>".$cant['name']."</td><td>".round($item['jo'])."</td></tr>";
+                            echo "<tr><td>".$nm['name']."</td><td>".$cant['name']."</td></tr>";
                         }
                     ?>
                     </table>
@@ -116,9 +87,9 @@
                             Completed Orders
                         </div>
                     </a>
-                    <a style="text-decoration: none; color: white;" href="items-list.php">
+                    <a style="text-decoration: none; color: white;" href="add-item.php">
                         <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                            View Items
+                            Add Items
                         </div>
                     </a>
                     <a style="text-decoration: none; color:#18314f;" href="food-category-list.php">
