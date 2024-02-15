@@ -1652,7 +1652,7 @@ button:focus {
 }
 .navbar-toggler {
 	float: right;
-	margin: 18px 0 0 5px;
+	margin: 35px 0 35px 0;
 	font-size: 28px;
 	color: #333;
 	transition: all 0.5s ease 0s;
@@ -7054,10 +7054,17 @@ input[type=number] {
 }
 
 .user-account {
+	display: inline-block;
+	margin-left: auto;
+	padding: 20px 0;
+	float: right;
+}
+.user-account a {
 	display: inline-flex;
     align-items: center;
+    padding: 10px 5px;
 }
-.user-account i {
+.user-account a i {
 	width: 36px;
 	height: 36px;
 	display: inline-flex;
@@ -7092,4 +7099,107 @@ input[type=number] {
 }
 .quantity-counter button.dec-btn {
 	font-size: 24px;
+}
+
+#sidebar-menu a {
+	display: block;
+	padding: 10px;
+	font-size: 16px;
+	font-weight: 500;
+	border-bottom: 1px solid #cccccc;
+}
+#sidebar-menu a:first-child {
+	border-top: 1px solid #cccccc;
+}
+#sidebar-menu a:hover {
+	background-color: #f2f2f2;
+}
+
+.navbar .navbar-brand {
+	margin-right: 0;
+}
+
+
+.section {
+	padding: 20px 0 !important;
+}
+.breadcrumb_section {
+	padding: 20px 0 40px !important;
+}
+.breadcrumb_section .page-title * {
+	color: #15885f !important;
+}
+
+
+table a, table a:hover {
+	font-size: 14px;
+	padding: 5px;
+	border-radius: 3px;
+	background-color: #15885f;
+	color: #ffffff;
+}
+table a.cancelled, table a.processing, table a.received, table a.completed,
+table a.cancelled:hover, table a.processing:hover, table a.received:hover, table a.completed:hover {
+	color: #000000;
+}
+table a.cancelled {
+	background: rgba(245, 70, 70, 0.8);
+}
+table a.processing {
+	background: rgba(245, 238, 70, 0.8);
+}
+table a.received {
+	background: rgba(180, 149, 149, 0.8);
+}
+table a.completed {
+	background: rgba(58, 216, 51, 0.8);
+}
+
+
+#rating-star {
+	display: inline-block;
+}
+#rating-star span.active {
+  color: orange;
+}
+#rating-star span {
+  font-size: 22px;
+  cursor: pointer;
+  margin-right: 7px;
+}
+
+#sidebar-menu.collapse:not(.show) {
+	display: unset !important;
+}
+
+
+@media (max-width: 991px) {
+	.header_wrap:not([class*="bg_"]):not([class*="bg-"]) {
+		position: relative;
+		z-index: 999;
+	}
+	.navbar-brand {
+	    padding: 13px 0 !important;
+	}
+
+	#sidebar-menu.collapse:not(.show) {
+		display: unset !important;
+	}
+	#sidebar-menu {
+		position: fixed;
+	    background: #ffffff;
+	    z-index: 99;
+	    height: 100vh;
+	    top: 0;
+	    left: 0;
+	    max-width: 300px;
+	    padding-top: 106px;
+	    box-shadow: 0 0 10px 0px #ccc;
+	    transform: translateX(-100%);
+    	transition: 0.3s;
+	}
+
+	#sidebar-menu.show {
+		transform: translateX(0%);
+	}
 }

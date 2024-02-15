@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php 
     include('sessioncust.php');
     include('sendmail.php');
@@ -8,130 +7,267 @@
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 ?>
-<html>
-    <head>
-        <title>SJT Canteen</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="css/grid.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <section class="section-plans">
-            <div class="row">
-                <div class="col span-6-of-12">
-                    <img src="images/person.png" class="profile-img">
-                    <div style="display: inline-block; vertical-align: super"><?php echo $row['name']?><br><?php echo $row['custid']?></div>
-                </div>
-                <div class="col span-6-of-12 header-btn">
-                    <a href="profile.php" class="custom-btn">Profile</a>
-                    <a href="index.php" class="custom-btn">Logout</a>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="Templatemanja" name="author">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tashan Restaurant and Cafe HTML5 Template.">
+
+<!-- SITE TITLE -->
+<title>Pannash Greens</title>
+<!-- Favicon Icon -->
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+<!-- Animation CSS -->
+<link rel="stylesheet" href="assets/css/animate.css">	
+<!-- Latest Bootstrap min CSS -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet"> 
+<!-- Icon Font CSS -->
+<link rel="stylesheet" href="assets/css/all.min.css">
+<link rel="stylesheet" href="assets/css/ionicons.min.css">
+<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets/css/linearicons.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<!--- owl carousel CSS-->
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.default.min.css">
+<!-- Slick CSS -->
+<link rel="stylesheet" href="assets/css/slick.css">
+<link rel="stylesheet" href="assets/css/slick-theme.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<!-- DatePicker CSS -->
+<link href="assets/css/datepicker.min.css" rel="stylesheet">
+<!-- TimePicker CSS -->
+<link href="assets/css/mdtimepicker.min.css" rel="stylesheet">
+<!-- Style CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
+<link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
+
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="preloader">
+	<div class="loader_wrap">
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+        </div>
+    </div>
+</div>
+<!-- END LOADER -->  
+
+<!-- START HEADER -->
+<header class="header_wrap header_with_topbar dark_skin main_menu_uppercase"><!--fixed-top-->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg"> 
+            <a class="navbar-brand" href="index.html">
+                <img class="logo_light" src="assets/images/logo_light.png" alt="logo">
+                <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar-menu" aria-expanded="false"> 
+            	<span class="ion-android-menu"></span>
+            </button>
+            <div class="user-account">
+                <a class="nav-link" href="#">
+                    <i class="ti-user"></i><span> <?= $row['name'] ?><br><?= $row['custid'] ?></span>
+                </a>
             </div>
-        </section>
-        <section class="section-cant">
-            <?php
-                $iQuery = "SELECT * FROM sjtalacarte WHERE iid=".$_GET['iid'];
-                $iResult = mysqli_query($db,$iQuery);
-                $iRow = mysqli_fetch_array($iResult, MYSQLI_ASSOC);
-            ?>
-            <div class="row">
-                <h2>Give Us Rating For <?php echo $iRow['name']; ?></h2>
+        </nav>
+    </div>
+</header>
+<!-- END HEADER -->
+
+<!-- START SECTION OUR MENU -->
+<div class="section pb_70">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3" id="sidebar-menu">
+                <a href="homepage.php">Dashboard</a>
+                <a href="stordstat.php">View Today's Orders</a>
+                <a href="stordview.php">Order History</a>
+                <a href="givefeed.php">Give Feedback</a>
+                <a href="viewfeed.php">View Feedback</a>
+                <a href="profile.php">Profile</a>
+                <a href="index.php">Logout</a>
             </div>
-            <div class="row">
-                <form method="post" id="sjt" name="sjt" class="custom-form" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
-                    <?php
-                        $custid = $row['custid'];
-                        if(isset($_POST['Submit'])){
-                            $target_dir = "uploads/";
-                            $extension = explode(".", $_FILES["image"]["name"]);
-                            $file_name = time(). "." .end($extension);
-                            $target_file = $target_dir . $file_name;
-
-                            if ($_FILES["image"]["name"]) {
-                              move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-                            }
-
-                            $itemId = $_GET['iid'];
-                            $orderID = $_GET['oid'];
-                            $image = $file_name;
-                            $rating = $_POST['rating'];
-                            $review = $_POST['comment'];
-                            $rdate = date('Y-m-d');
-
-                            $add = "INSERT into item_review(item_id,ord_id,rating,image,review,date) values ($itemId,$orderID,$rating,'$image','$review','$rdate')";
-                            $retval = mysqli_query($db,$add);
-
-                            $mailBody = "Order No.: $orderID<br/>
-                            Item Name: ".$iRow['name']."<br/>
-                            Review: $review<br/>
-                            Rating: $rating<br/>
-                            <img src='' style='width: 200px'/>";
-
-                            sendMail("cssonawane32@gmail.com", "Review for ".$iRow['name']." From Order No-".$_GET['oid'], $mailBody);
-                        ?>
-                        <script>
-                            alert("Review submitted successfully.");
-                            window.location.href="stordview.php";
-                        </script>
-                        <?php
-                        }
-                    ?>
-                    <label for="image" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Image</label>
-                    <input type="file" id="image" name="image" style="margin:2vw 4vw;">
-                    <br>
-                    <label for="rating" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Your Rating</label>
-                    <div id="rating-star" style="margin: 2vw 4vw;">
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
-                      <span class="fa fa-star"></span>
+            <div class="col-lg-9 col-sm-12 col-12">
+                <?php
+                    $iQuery = "SELECT * FROM sjtalacarte WHERE iid=".$_GET['iid'];
+                    $iResult = mysqli_query($db,$iQuery);
+                    $iRow = mysqli_fetch_array($iResult, MYSQLI_ASSOC);
+                ?>
+                <!-- START SECTION BREADCRUMB -->
+                <div class="breadcrumb_section background_bg page_title_light">
+                    <div class="page-title">
+                        <h1>Rating For <?= $iRow['name']; ?></h1>
                     </div>
-                    <input type="hidden" name="rating" id="rating" value="0" style="margin:2vw 4vw;"><br>
-                    <label for="comment" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Your Feedback</label>
-                    <input type="text" placeholder="Enter your feedback here" id="comment" name="comment" style="margin:2vw 4vw;" required>
-                    <br>
-                    <input type="submit" for="sjt" value="Submit" id="Submit" name="Submit" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;margin-left:35vw; margin-botton:4vw;"><br>
-                </form>
-            </div>
-        </section>
-        <section class="section-plans">
-            <div class="row">
-                <div class="col span-1-of-1 dashboard-menu">
-                    <a style="text-decoration: none; color:#18314f;" class="mx-auto" href="homepage.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
-                            GO BACK
-                        </div>
-                    </a>
-                    <!-- <a style="text-decoration: none; color: white;" href="viewfeed.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                            VIEW FEEDBACK
-                        </div>
-                    </a> -->
+                </div>
+                <!-- END SECTION BREADCRUMB -->
+                <div class="row align-items-center">
+                    <div class="col-12">
+                        <?php
+                            $custid = $row['custid'];
+                            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                                $target_dir = "uploads/";
+                                $extension = explode(".", $_FILES["image"]["name"]);
+                                $file_name = time(). "." .end($extension);
+                                $target_file = $target_dir . $file_name;
+
+                                if ($_FILES["image"]["name"]) {
+                                  move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                                }
+
+                                $itemId = $_GET['iid'];
+                                $orderID = $_GET['oid'];
+                                $image = $file_name;
+                                $rating = $_POST['rating'];
+                                $review = $_POST['comment'];
+                                $rdate = date('Y-m-d');
+
+                                $add = "INSERT into item_review(item_id,ord_id,rating,image,review,date) values ($itemId,$orderID,$rating,'$image','$review','$rdate')";
+                                $retval = mysqli_query($db,$add);
+
+                                $mailBody = "Order No.: $orderID<br/>
+                                Item Name: ".$iRow['name']."<br/>
+                                Review: $review<br/>
+                                Rating: $rating<br/>
+                                <img src='' style='width: 200px'/>";
+
+                                sendMail("cssonawane32@gmail.com", "Review for ".$iRow['name']." From Order No-".$_GET['oid'], $mailBody);
+                            ?>
+                            <script>
+                                alert("Review submitted successfully.");
+                                window.location.href="stordview.php";
+                            </script>
+                            <?php
+                            }
+                        ?>
+                        <form method="post" class="row" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+                            <div class="form-group col-12">
+                                <label>Image</label>
+                                <input type="file" class="form-control" id="image" name="image"/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Rating</label><br/>
+                                <div id="rating-star">
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                  <span class="fa fa-star"></span>
+                                </div>
+                                <input type="hidden" name="rating" id="rating" value="0"/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Review</label>
+                                <input type="text" class="form-control" id="comment" name="comment" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </div>
+</div>
+<!-- START SECTION OUR MENU -->
 
-        <script>
-            document.querySelector('#rating-star').addEventListener('click', function (e) {
-                if (e.target.nodeName === 'SPAN') {
-                    let currentSibling = e.target;
-                    let nextSibling = e.target;
-                    currentSibling.classList.add('active');
-                    while ((currentSibling = currentSibling.previousElementSibling)) {
-                        currentSibling.classList.add('active');
-                    }
-                    while ((nextSibling = nextSibling.nextElementSibling)) {
-                        nextSibling.classList.remove('active');
-                    }
-                }
+<!-- START FOOTER -->
+<footer class="bg_dark footer_dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="bottom_footer border-top-tran">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-md-0 text-center text-md-left">© <?= date('Y'); ?> All Rights Reserved by <span class="text_default">Pannash Greens</span></p>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <ul class="list_none footer_link text-center text-md-right">
+                                <li><a href="#">Privacy Policy</a></li>
+                                <li><a href="#">Terms &amp; Conditions</a></li>
+                            </ul>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- END FOOTER -->
 
-                let rating = document.querySelectorAll("span.active").length;
-                document.querySelector('#rating').value = rating;
-            });
-        </script>
-   </body>
+<!-- <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>  -->
+
+<!-- Latest jQuery --> 
+<script src="assets/js/jquery-1.12.4.min.js"></script> 
+<!-- Latest compiled and minified Bootstrap --> 
+<script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+<!-- owl-carousel min js  --> 
+<script src="assets/owlcarousel/js/owl.carousel.min.js"></script> 
+<!-- magnific-popup min js  --> 
+<script src="assets/js/magnific-popup.min.js"></script> 
+<!-- waypoints min js  --> 
+<script src="assets/js/waypoints.min.js"></script> 
+<!-- parallax js  --> 
+<script src="assets/js/parallax.js"></script> 
+<!-- countdown js  --> 
+<script src="assets/js/jquery.countdown.min.js"></script> 
+<!-- jquery.countTo js  -->
+<script src="assets/js/jquery.countTo.js"></script>
+<!-- imagesloaded js --> 
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<!-- isotope min js --> 
+<script src="assets/js/isotope.min.js"></script>
+<!-- jquery.appear js  -->
+<script src="assets/js/jquery.appear.js"></script>
+<!-- jquery.dd.min js -->
+<script src="assets/js/jquery.dd.min.js"></script>
+<!-- slick js -->
+<script src="assets/js/slick.min.js"></script>
+<!-- DatePicker js -->
+<script src="assets/js/datepicker.min.js"></script>
+<!-- TimePicker js -->
+<script src="assets/js/mdtimepicker.min.js"></script>
+<!-- scripts js --> 
+<script src="assets/js/scripts.js"></script>
+
+<script>
+    document.querySelector('#rating-star').addEventListener('click', function (e) {
+        if (e.target.nodeName === 'SPAN') {
+            let currentSibling = e.target;
+            let nextSibling = e.target;
+            currentSibling.classList.add('active');
+            while ((currentSibling = currentSibling.previousElementSibling)) {
+                currentSibling.classList.add('active');
+            }
+            while ((nextSibling = nextSibling.nextElementSibling)) {
+                nextSibling.classList.remove('active');
+            }
+        }
+
+        let rating = document.querySelectorAll("span.active").length;
+        document.querySelector('#rating').value = rating;
+    });
+</script>
+
+</body>
 </html>
