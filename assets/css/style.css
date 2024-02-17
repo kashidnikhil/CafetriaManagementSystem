@@ -7155,6 +7155,13 @@ table a.completed {
 	background: rgba(58, 216, 51, 0.8);
 }
 
+table a.item-remove {
+	font-size: 14px;
+	padding: unset;
+	border-radius: unset;
+	background-color: transparent;
+}
+
 
 #rating-star {
 	display: inline-block;
@@ -7170,6 +7177,16 @@ table a.completed {
 
 #sidebar-menu.collapse:not(.show) {
 	display: unset !important;
+}
+
+.temp-msg {
+	position: fixed;
+	top: 40px;
+	right: 40px;
+	background-color: #15885f;
+	color: #ffffff;
+	padding: 5px 10px;
+	border-radius: 3px;
 }
 
 
