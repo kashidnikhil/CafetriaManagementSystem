@@ -16,5 +16,5 @@ if($_POST['quantity'] != "") {
 $_SESSION['cart'] = $cartArr;
 
 //print_r($_SESSION['cart']);
-echo "true";
+echo count($_SESSION['cart']);
 ?>

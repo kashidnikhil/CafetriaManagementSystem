@@ -6143,7 +6143,7 @@ footer .widget_recent_post .post_img img {
 	padding: 5px 20px;
 }
 .tab-content > .tab-pane {
-	display: block;
+	display: none; /*block*/
 	height: 0;
 	visibility: hidden;
 }
@@ -7076,6 +7076,20 @@ input[type=number] {
 	border-radius: 50%;
 }
 
+.cart-count {
+	display: inline-block;
+	float: right;
+}
+.cart-count a {
+	padding: 38px 0;
+}
+.cart-count a i {
+	font-size: 24px;
+}
+.cart-count a span.cart_count {
+	left: -10px;
+}
+
 .quantity-counter {
 	display: inline-flex;
 	align-items: center;
@@ -7218,5 +7232,11 @@ table a.item-remove {
 
 	#sidebar-menu.show {
 		transform: translateX(0%);
+	}
+}
+
+@media (max-width: 380px) {
+	.user-account a i {
+		display: none;
 	}
 }

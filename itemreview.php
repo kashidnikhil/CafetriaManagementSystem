@@ -73,40 +73,15 @@
 </div>
 <!-- END LOADER -->  
 
-<!-- START HEADER -->
-<header class="header_wrap header_with_topbar dark_skin main_menu_uppercase"><!--fixed-top-->
-    <div class="container">
-        <nav class="navbar navbar-expand-lg"> 
-            <a class="navbar-brand" href="index.html">
-                <img class="logo_light" src="assets/images/logo_light.png" alt="logo">
-                <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar-menu" aria-expanded="false"> 
-            	<span class="ion-android-menu"></span>
-            </button>
-            <div class="user-account">
-                <a class="nav-link" href="#">
-                    <i class="ti-user"></i><span> <?= $row['name'] ?><br><?= $row['custid'] ?></span>
-                </a>
-            </div>
-        </nav>
-    </div>
-</header>
-<!-- END HEADER -->
+<?php include('header.php'); ?>
 
 <!-- START SECTION OUR MENU -->
 <div class="section pb_70">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3" id="sidebar-menu">
-                <a href="homepage.php">Dashboard</a>
-                <a href="stordstat.php">Today's Orders</a>
-                <a href="stordview.php">Order History</a>
-                <a href="givefeed.php">Give Feedback</a>
-                <a href="viewfeed.php">View Feedback</a>
-                <a href="profile.php">Profile</a>
-                <a href="index.php">Logout</a>
-            </div>
+            
+            <?php include('sidebar.php'); ?>
+
             <div class="col-lg-9 col-sm-12 col-12">
                 <?php
                     $iQuery = "SELECT * FROM sjtalacarte WHERE iid=".$_GET['iid'];
@@ -191,29 +166,7 @@
 </div>
 <!-- START SECTION OUR MENU -->
 
-<!-- START FOOTER -->
-<footer class="bg_dark footer_dark">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="bottom_footer border-top-tran">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-md-0 text-center text-md-left">© <?= date('Y'); ?> All Rights Reserved by <span class="text_default">Pannash Greens</span></p>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <ul class="list_none footer_link text-center text-md-right">
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                            </ul>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- END FOOTER -->
+<?php include('footer.php'); ?>
 
 <!-- <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>  -->
 
