@@ -1,4 +1,6 @@
 <?php
+    include('sendmail.php');
+
     function random_strings($length_of_string)
     {
       $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -22,11 +24,16 @@
             $phone = mysqli_real_escape_string($db,$_POST['phone']);
             $pwd = mysqli_real_escape_string($db,$_POST['pwd']);
 
-            $sql = "INSERT into customer(custid,name,phone,email) values ('$custid','$fullname','$phone','$email')";
+            $sql = "INSERT into customer(custid,name,wallet,phone,email) values ('$custid','$fullname',5000,'$phone','$email')";
             $result = mysqli_query($db,$sql);
 
             $sql1 = "INSERT into sauth(custid,pwd) values ('$custid','$pwd')";
             $result1 = mysqli_query($db,$sql1);
+
+            $mailBody = "Dear customer,<br/><br/>
+            Your account is created.<br/>
+            Your username is <strong>".$custid."</strong>";
+            sendMail($email, "Pannash Greens - Account Created", $mailBody);
 
             if($result) {
                 echo "<script>alert('Register successful!');</script>";

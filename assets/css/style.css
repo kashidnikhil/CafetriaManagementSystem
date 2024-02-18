@@ -7203,6 +7203,13 @@ table a.item-remove {
 	border-radius: 3px;
 }
 
+.cart_list img {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+}
+
+
 
 @media (max-width: 991px) {
 	.header_wrap:not([class*="bg_"]):not([class*="bg-"]) {

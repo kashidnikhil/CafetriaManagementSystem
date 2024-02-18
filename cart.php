@@ -263,7 +263,9 @@
                 type: "POST",
                 data: "itemId="+id+"&quantity="+qty,
                 success: function(result){
-                    if(result >= 0) {
+                    let response = JSON.parse(result);
+
+                    if(response.result == "true") {
                         let id = 'msg'+divId
                         $("body").append(`<div id="${id}" class="temp-msg">Cart Updated!</div>`);
                         setTimeout(() => {                            
@@ -271,19 +273,40 @@
                         }, 3000);
                         divId++;
 
-                        $(".cart-count .cart_count").text(result);
+                        $(".cart-count .cart_trigger .cart_count").text(response.count);
+                        updateCart(response.cart);
                     }
                 }
             });
         }
 
-        $("a.item-remove").click(function(e) {
+        $("a.item-remove, a.item_remove").click(function(e) {
             e.preventDefault();
+            let itemId = $(this).attr("item-id");
 
-            addToCart($(this).attr("item-id"), "");
+            addToCart(itemId, "");
 
-            $(this).closest("tr").remove();
+            $("a.item-remove[item-id='"+itemId+"']").closest("tr").remove();
+            $("a.item_remove[item-id='"+itemId+"']").closest("li").remove();
         });
+
+        const updateCart = (cart) => {
+            let cartStr = ``;
+            let total = 0;
+
+            $.each(cart, (key, item) => {
+                cartStr += `<li>
+                            <a href="#" class="item_remove" item-id="${key}"><i class="ion-close"></i></a>
+                            <a href="#"><img src="uploads/${item.image}" alt="${item.name}">${item.name}</a>
+                            <span class="cart_quantity"> ${item.quantity} x <span class="cart_amount"> <span class="price_symbole">Rs. </span></span>${item.price}</span>
+                        </li>`;
+
+                total += (parseInt(item.quantity) * parseFloat(item.price));
+            });
+
+            $("#cart_list").html(cartStr);
+            $("#cartTotalAmt").text(total);
+        }
     });
 </script>
 

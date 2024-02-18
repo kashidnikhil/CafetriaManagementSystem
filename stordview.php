@@ -168,5 +168,59 @@
 <!-- scripts js --> 
 <script src="assets/js/scripts.js"></script>
 
+<script>
+    $(document).ready(function(){
+        let divId = 0;
+        const addToCart = (id, qty) => {
+            $.ajax({url: "cart_session.php",
+                type: "POST",
+                data: "itemId="+id+"&quantity="+qty,
+                success: function(result){
+                    let response = JSON.parse(result);
+
+                    if(response.result == "true") {
+                        let id = 'msg'+divId
+                        $("body").append(`<div id="${id}" class="temp-msg">Cart Updated!</div>`);
+                        setTimeout(() => {                            
+                            $("#"+id).remove();
+                        }, 3000);
+                        divId++;
+
+                        $(".cart-count .cart_trigger .cart_count").text(response.count);
+                        updateCart(response.cart);
+                    }
+                }
+            });
+        }
+
+        $(document).on("click", "a.item_remove", function(e) {
+            e.preventDefault();
+
+            addToCart($(this).attr("item-id"), "");
+
+            $(this).closest("li").remove();
+        });
+
+        const updateCart = (cart) => {
+            let cartStr = ``;
+            let total = 0;
+
+            $.each(cart, (key, item) => {
+                cartStr += `<li>
+                            <a href="#" class="item_remove" item-id="${key}"><i class="ion-close"></i></a>
+                            <a href="#"><img src="uploads/${item.image}" alt="${item.name}">${item.name}</a>
+                            <span class="cart_quantity"> ${item.quantity} x <span class="cart_amount"> <span class="price_symbole">Rs. </span></span>${item.price}</span>
+                        </li>`;
+
+                let itemTotal = (parseInt(item.quantity) * parseFloat(item.price));
+                total += itemTotal;
+            });
+
+            $("#cart_list").html(cartStr);
+            $("#cartTotalAmt").text(total);
+        }
+    });
+</script>
+
 </body>
 </html>

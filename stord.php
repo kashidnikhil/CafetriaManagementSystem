@@ -72,40 +72,15 @@
 </div>
 <!-- END LOADER -->  
 
-<!-- START HEADER -->
-<header class="header_wrap header_with_topbar dark_skin main_menu_uppercase"><!--fixed-top-->
-    <div class="container">
-        <nav class="navbar navbar-expand-lg"> 
-            <a class="navbar-brand" href="index.html">
-                <img class="logo_light" src="assets/images/logo_light.png" alt="logo">
-                <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo">
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidebar-menu" aria-expanded="false"> 
-            	<span class="ion-android-menu"></span>
-            </button>
-            <div class="user-account">
-                <a class="nav-link" href="#">
-                    <i class="ti-user"></i><span> <?= $row['name'] ?><br><?= $row['custid'] ?></span>
-                </a>
-            </div>
-        </nav>
-    </div>
-</header>
-<!-- END HEADER -->
+<?php include('header.php'); ?>
 
 <!-- START SECTION OUR MENU -->
 <div class="section pb_70">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3" id="sidebar-menu">
-                <a href="homepage.php">Dashboard</a>
-                <a href="stordstat.php">Today's Orders</a>
-                <a href="stordview.php">Order History</a>
-                <a href="givefeed.php">Give Feedback</a>
-                <a href="viewfeed.php">View Feedback</a>
-                <a href="profile.php">Profile</a>
-                <a href="index.php">Logout</a>
-            </div>
+
+            <?php include('sidebar.php'); ?>
+            
             <div class="col-lg-9 col-sm-12 col-12">
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
@@ -155,29 +130,7 @@
 </div>
 <!-- START SECTION OUR MENU -->
 
-<!-- START FOOTER -->
-<footer class="bg_dark footer_dark">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="bottom_footer border-top-tran">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="mb-md-0 text-center text-md-left">© <?= date('Y'); ?> All Rights Reserved by <span class="text_default">Pannash Greens</span></p>
-                        </div>
-                        <!-- <div class="col-md-6">
-                            <ul class="list_none footer_link text-center text-md-right">
-                                <li><a href="#">Privacy Policy</a></li>
-                                <li><a href="#">Terms &amp; Conditions</a></li>
-                            </ul>
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- END FOOTER -->
+<?php include('footer.php'); ?>
 
 <!-- <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>  -->
 
@@ -213,6 +166,60 @@
 <script src="assets/js/mdtimepicker.min.js"></script>
 <!-- scripts js --> 
 <script src="assets/js/scripts.js"></script>
+
+<script>
+    $(document).ready(function(){
+        let divId = 0;
+        const addToCart = (id, qty) => {
+            $.ajax({url: "cart_session.php",
+                type: "POST",
+                data: "itemId="+id+"&quantity="+qty,
+                success: function(result){
+                    let response = JSON.parse(result);
+
+                    if(response.result == "true") {
+                        let id = 'msg'+divId
+                        $("body").append(`<div id="${id}" class="temp-msg">Cart Updated!</div>`);
+                        setTimeout(() => {                            
+                            $("#"+id).remove();
+                        }, 3000);
+                        divId++;
+
+                        $(".cart-count .cart_trigger .cart_count").text(response.count);
+                        updateCart(response.cart);
+                    }
+                }
+            });
+        }
+
+        $(document).on("click", "a.item_remove", function(e) {
+            e.preventDefault();
+
+            addToCart($(this).attr("item-id"), "");
+
+            $(this).closest("li").remove();
+        });
+
+        const updateCart = (cart) => {
+            let cartStr = ``;
+            let total = 0;
+
+            $.each(cart, (key, item) => {
+                cartStr += `<li>
+                            <a href="#" class="item_remove" item-id="${key}"><i class="ion-close"></i></a>
+                            <a href="#"><img src="uploads/${item.image}" alt="${item.name}">${item.name}</a>
+                            <span class="cart_quantity"> ${item.quantity} x <span class="cart_amount"> <span class="price_symbole">Rs. </span></span>${item.price}</span>
+                        </li>`;
+
+                let itemTotal = (parseInt(item.quantity) * parseFloat(item.price));
+                total += itemTotal;
+            });
+
+            $("#cart_list").html(cartStr);
+            $("#cartTotalAmt").text(total);
+        }
+    });
+</script>
 
 </body>
 </html>

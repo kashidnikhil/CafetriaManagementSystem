@@ -12,5 +12,5 @@ $_SESSION['OTP'] = random_strings(6);
 
 $mailBody = "Verification OTP: ".$_SESSION['OTP'].".";
 
-echo sendMail($_POST['email'], "Verification OTP", $mailBody);
+echo sendMail($_POST['email'], "Pannash Greens - Verification OTP", $mailBody);
 ?>

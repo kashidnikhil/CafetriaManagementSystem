@@ -154,7 +154,7 @@
                                             <th>Total</th>
                                         </tr>
                                     </thead>
-                                    <tbody>                                        
+                                    <tbody id="cartTable">                                        
                                         <?php 
                                             $cartArr = [];
                                             $total = 0;
@@ -185,7 +185,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>SubTotal</th>
-                                            <td class="product-subtotal">Rs. <?= $total ?></td>
+                                            <td class="product-subtotal">Rs. <span class="cartTotalAmt"><?= $total ?></span></td>
                                         </tr>
                                         <tr>
                                             <th>Shipping</th>
@@ -193,7 +193,7 @@
                                         </tr>
                                         <tr>
                                             <th>Total</th>
-                                            <td class="product-subtotal">Rs. <?= $total ?></td>
+                                            <td class="product-subtotal">Rs. <span class="cartTotalAmt"><?= $total ?></span></td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -272,6 +272,68 @@
 <script src="assets/js/mdtimepicker.min.js"></script>
 <!-- scripts js --> 
 <script src="assets/js/scripts.js"></script>
+
+<script>
+    $(document).ready(function(){
+        let divId = 0;
+        const addToCart = (id, qty) => {
+            $.ajax({url: "cart_session.php",
+                type: "POST",
+                data: "itemId="+id+"&quantity="+qty,
+                success: function(result){
+                    let response = JSON.parse(result);
+
+                    if(response.result == "true") {
+                        let id = 'msg'+divId
+                        $("body").append(`<div id="${id}" class="temp-msg">Cart Updated!</div>`);
+                        setTimeout(() => {                            
+                            $("#"+id).remove();
+                        }, 3000);
+                        divId++;
+
+                        $(".cart-count .cart_trigger .cart_count").text(response.count);
+                        updateCart(response.cart);
+                    }
+                }
+            });
+        }
+
+        $(document).on("click", "a.item_remove", function(e) {
+            e.preventDefault();
+
+            addToCart($(this).attr("item-id"), "");
+
+            $(this).closest("li").remove();
+        });
+
+        const updateCart = (cart) => {
+            let cartStr = ``;
+            let tableStr = ``;
+            let total = 0;
+
+            $.each(cart, (key, item) => {
+                cartStr += `<li>
+                            <a href="#" class="item_remove" item-id="${key}"><i class="ion-close"></i></a>
+                            <a href="#"><img src="uploads/${item.image}" alt="${item.name}">${item.name}</a>
+                            <span class="cart_quantity"> ${item.quantity} x <span class="cart_amount"> <span class="price_symbole">Rs. </span></span>${item.price}</span>
+                        </li>`;
+
+                let itemTotal = (parseInt(item.quantity) * parseFloat(item.price));
+
+                tableStr += `<tr>
+                            <td>${item.name} <span class="product-qty">x ${item.quantity}</span></td>
+                            <td>Rs. ${itemTotal}</td>
+                        </tr>`;
+
+                total += itemTotal;
+            });
+
+            $("#cart_list").html(cartStr);
+            $("#cartTable").html(tableStr);
+            $("#cartTotalAmt, .cartTotalAmt").text(total);
+        }
+    });
+</script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include('sessioncust.php');
 
 $cartArr = [];
 
@@ -15,6 +15,28 @@ if($_POST['quantity'] != "") {
 
 $_SESSION['cart'] = $cartArr;
 
-//print_r($_SESSION['cart']);
-echo count($_SESSION['cart']);
+$cartItemArr = [];
+
+foreach($cartArr as $key => $value) {
+  if($key != "undefined") {
+    $iQuery = "SELECT * FROM sjtalacarte WHERE iid=".$key;
+    $iRes = mysqli_query($db,$iQuery);
+    $item = mysqli_fetch_array($iRes, MYSQLI_ASSOC);
+
+    $cartItemArr[$key] = [
+      'image' => $item['image'], 
+      'name' => $item['name'],
+      'price' => $item['price'],
+      'quantity' => $value
+    ];
+  }
+}
+
+$response = [
+  'result' => 'true',
+  'count' => count($cartItemArr),
+  'cart' => $cartItemArr
+];
+
+echo json_encode($response);
 ?>
