@@ -1,10 +1,12 @@
 <?php 
     include('sessioncust.php');
+    include('sendmail.php');
 
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from customer where custid='$uname'";
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $emailId = $row['email'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -101,6 +103,7 @@
                                     $x = 0;
 
                                     $cartItemArr = [];
+                                    $bodyStr = "";
 
                                     if(isset($_SESSION['cart'])) {
                                         $cartItemArr = $_SESSION['cart'];
@@ -114,6 +117,9 @@
                                             $ord[$x]=$it;
                                             $pri[$x]=$pr;
                                             $qty[$x++]=$cartItemArr[$it];
+
+                                            $bodyStr .= "<tr><td>".$item['name']."</td><td>".$item['price']."</td>
+                                            <td>".$cartItemArr[$it]."</td><td>".(floatval($item['price']) * intval($cartItemArr[$it]))."</td></tr>";
                                         }
                                     }
                                     $cost = 0;
@@ -137,9 +143,18 @@
                                         $add="update customer set wallet='$balance' where custid='$cust'";
                                         $retval = mysqli_query($db,$add);
 
+                                        $mailBody = "Order No.: $oid<br/>
+                                        <table>
+                                        <tr><th>Item name</th><th>Price</th><th>Quantity</th><th>Total</th></tr>
+                                        $bodyStr
+                                        <tr><th colspan='3'>Total</th><th>Rs. $cost</th></tr>
+                                        </table>";
+
+                                        sendMail("cssonawane32@gmail.com", "Pannash Greens - Order No. $oid", $mailBody);//$emailId
+
+                                        unset($_SESSION['cart']);
                                         echo "<script>alert('Order Placed!');</script>";
                                         echo "<script>window.location.href='stordstat.php';</script>";
-                                        unset($_SESSION['cart']);
                                     } else {
                                         echo "<script>alert('Not enough Balance in your wallet');</script>";
                                     }
@@ -187,10 +202,10 @@
                                             <th>SubTotal</th>
                                             <td class="product-subtotal">Rs. <span class="cartTotalAmt"><?= $total ?></span></td>
                                         </tr>
-                                        <tr>
+                                        <!-- <tr>
                                             <th>Shipping</th>
                                             <td>Free Shipping</td>
-                                        </tr>
+                                        </tr> -->
                                         <tr>
                                             <th>Total</th>
                                             <td class="product-subtotal">Rs. <span class="cartTotalAmt"><?= $total ?></span></td>
@@ -207,6 +222,7 @@
                             <div class="payment_method">
                                 <div class="heading_s1">
                                     <h4>Payment</h4>
+                                    <p><strong>Refund Note:</strong> Order amount will be refund in 3-4 business days.</p>
                                 </div>
                                 <div class="payment_option">
                                     <div class="custome-radio">
@@ -221,6 +237,10 @@
                                     <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios5" value="option5">
                                         <label class="form-check-label" for="exampleRadios5">Paypal</label>
+                                    </div>
+                                    <div class="custome-radio">
+                                        <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios6" value="option6">
+                                        <label class="form-check-label" for="exampleRadios6">Cash on Delivery</label>
                                     </div>
                                 </div>
                             </div>

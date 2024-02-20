@@ -1,135 +1,184 @@
-<!DOCTYPE html>
 <?php
-//    include("config.php");
     session_start();
 
-    if($_SERVER["REQUEST_METHOD"] == "POST") {
-// username and password sent from form 
-   define('DB_SERVER', 'localhost');
-   define('DB_USERNAME', 'root');
-   define('DB_PASSWORD', '');
-   define('DB_DATABASE', 'canteenmgmt');
-   $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // username and password sent from form 
+        define('DB_SERVER', 'localhost');
+        define('DB_USERNAME', 'root');
+        define('DB_PASSWORD', '');
+        define('DB_DATABASE', 'canteenmgmt');
+        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
         $myusername = mysqli_real_escape_string($db,$_POST['uname']);
         $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
 
-        $sql = "SELECT eid FROM eauth WHERE  eid= '$myusername' and pwd = '$mypassword'";
+        $sql = "SELECT eid FROM eauth WHERE eid= '$myusername' and pwd = '$mypassword'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
         $error="Enter details.";
         $count = mysqli_num_rows($result);
 
-// If result matched $myusername and $mypassword, table row must be 1 row
-
+        // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
             $_SESSION['login_user'] = $myusername;
             echo "done";
             header("location: emphome.php");
         }
         else {
-            echo "<script>alert('Enter correct login details');window.location.href='customer.php';</script>";
+            echo "<script>alert('Enter correct details');window.location.href='customer.php';</script>";
         }
     }
 ?>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>VIT Canteen</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="css/index.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="Templatemanja" name="author">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tashan Restaurant and Cafe HTML5 Template.">
+
+<!-- SITE TITLE -->
+<title>Pannash Greens</title>
+<!-- Favicon Icon -->
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+<!-- Animation CSS -->
+<link rel="stylesheet" href="assets/css/animate.css"> 
+<!-- Latest Bootstrap min CSS -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet"> 
+<!-- Icon Font CSS -->
+<link rel="stylesheet" href="assets/css/all.min.css">
+<link rel="stylesheet" href="assets/css/ionicons.min.css">
+<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets/css/linearicons.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<!--- owl carousel CSS-->
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.default.min.css">
+<!-- Slick CSS -->
+<link rel="stylesheet" href="assets/css/slick.css">
+<link rel="stylesheet" href="assets/css/slick-theme.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<!-- DatePicker CSS -->
+<link href="assets/css/datepicker.min.css" rel="stylesheet">
+<!-- TimePicker CSS -->
+<link href="assets/css/mdtimepicker.min.css" rel="stylesheet">
+<!-- Style CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
+
 </head>
 
-  <body>
+<body>
 
-    <div class="mycontainer">
-    <section id="mysection">
-    <section id="section0">
-        <div class="myrow">
-          
-          <div class="column1">
-              <img id="loginimg" src="images/undraw2.png" />
-          </div>
-  
-          <div class="column2">
-                     <div class="content2">
-                    <h1 class="mt-0">Login</h1>
-                    <div class="card">
-                        <nav class="nav-extended btncolor">
-                            
-                            <div class="nav-content ">
-                              <ul class="tabs tabs-transparent">
-                                <li class="tab"><a class="active">Employee</a></li>
-                              </ul>
-                            </div>
-                          </nav>
-                        
-                          <div id="test1" class="col s12 p-15">
-                            <div>&nbsp;</div>
-                              <div class="row">
-                                  <form class="col s12" method="POST" action = "">
-                                    <div class="row">
-                                      <div class="input-field col s12">
-                                        <input id="uname" type="text" class="validate" name="uname" required>
-                                        <label for="uname">Username</label>
-                                      </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="input-field col s12">
-                                          <input id="pwd" type="password" class="validate" name="pwd" required>
-                                          <label for="pwd">Password</label>
-                                        </div>
-                                      </div>
-                                      <input type="submit" value="LOGIN" class="waves-effejct waves-light btn btncolor center studentlogin">
-                                  </form>
-                                </div>                             
-                          </div>
-              </div>
-            </div>
-          </div>
-  
+<!-- LOADER -->
+<div id="preloader">
+  <div class="loader_wrap">
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
         </div>
-      </section>
+    </div>
+</div>
+<!-- END LOADER -->  
 
-    </section>
+<!-- START HEADER -->
+<header class="header_wrap header_with_topbar dark_skin main_menu_uppercase"><!--fixed-top-->
+    <div class="container">
+        <nav class="navbar navbar-expand-lg"> 
+            <a class="navbar-brand" href="index.html">
+                <img class="logo_light" src="assets/images/logo_light.png" alt="logo">
+                <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo">
+            </a>
+        </nav>
+    </div>
+</header>
+<!-- END HEADER -->
 
-    <div>&nbsp;</div>
+<!-- START SECTION LOGIN -->
+<div class="section">
+  <div class="container">
+      <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8">
+                <div class="lr_form box_shadow1 radius_all_10 animation" data-animation="fadeInUp" data-animation-delay="0.02s">
+                    <div class="heading_s1 text-center pb-md-3">
+                        <h2>Login to Your Account</h2>
+                    </div>
+                    <form method="post" class="form_style1" action="<?php $_PHP_SELF ?>">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="uname" name="uname" placeholder="Username" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" type="password" id="pwd" name="pwd" Placeholder="Password" required>
+                        </div>
+                        <!-- <div class="login_footer form-group">
+                          <a href="#">Forgot password?</a>
+                            <div class="chek-form">
+                                <div class="custome-checkbox">
+                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox3" value="">
+                                    <label class="form-check-label" for="exampleCheckbox3">Remember me</label>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-default btn-block" name="login">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END SECTION LOGIN -->
 
-  
+<?php include('footer.php'); ?>
 
-    </div>   
-    
-    <script>
+<!-- <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>  -->
 
-$('.mycontainer').hide(); // this or use css to hide the div
-$('.big').delay(1000).fadeOut('slow');
-$('.mycontainer').delay(2000).fadeIn('slow');
-
-var sect1= document.querySelector('#section1'); 
-$(document).ready(function(){
-  $('.studentlogin').click(function(){
-    // $('#section1').css("transform","translate(-1600px,0)");
-    $('#mysection').css("transform","translate(0,-675px)");
-  });
-});
-
-
-
-$(document).ready(function () {
-            $('.tabs').tabs();
-});
-     
-
-
-
-    </script>
+<!-- Latest jQuery --> 
+<script src="assets/js/jquery-1.12.4.min.js"></script> 
+<!-- Latest compiled and minified Bootstrap --> 
+<script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+<!-- owl-carousel min js  --> 
+<script src="assets/owlcarousel/js/owl.carousel.min.js"></script> 
+<!-- magnific-popup min js  --> 
+<script src="assets/js/magnific-popup.min.js"></script> 
+<!-- waypoints min js  --> 
+<script src="assets/js/waypoints.min.js"></script> 
+<!-- parallax js  --> 
+<script src="assets/js/parallax.js"></script> 
+<!-- countdown js  --> 
+<script src="assets/js/jquery.countdown.min.js"></script> 
+<!-- jquery.countTo js  -->
+<script src="assets/js/jquery.countTo.js"></script>
+<!-- imagesloaded js --> 
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<!-- isotope min js --> 
+<script src="assets/js/isotope.min.js"></script>
+<!-- jquery.appear js  -->
+<script src="assets/js/jquery.appear.js"></script>
+<!-- jquery.dd.min js -->
+<script src="assets/js/jquery.dd.min.js"></script>
+<!-- slick js -->
+<script src="assets/js/slick.min.js"></script>
+<!-- DatePicker js -->
+<script src="assets/js/datepicker.min.js"></script>
+<!-- TimePicker js -->
+<script src="assets/js/mdtimepicker.min.js"></script>
+<!-- scripts js --> 
+<script src="assets/js/scripts.js"></script>
 
 </body>
 </html>
-<!--  YELLOW #FAA41A  GREY #262626-->

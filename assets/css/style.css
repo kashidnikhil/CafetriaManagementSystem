@@ -7209,6 +7209,23 @@ table a.item-remove {
 	object-fit: cover;
 }
 
+/*Customer Side*/
+.best-employee div {
+	display: block;
+}
+.best-employee div label {
+	max-width: 160px;
+	width: 100%;
+}
+
+table.items-list img {
+	width: 50px;
+	height: 40px;
+	object-fit: cover;
+}
+table.items-list td {
+	vertical-align: middle;
+}
 
 
 @media (max-width: 991px) {
