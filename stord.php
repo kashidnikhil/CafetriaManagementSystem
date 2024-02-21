@@ -121,6 +121,10 @@
                                 Review</a></td>
                             </tr>
                             <?php } } ?>
+                            <tr>
+                                <td colspan="2" class="text-right"><strong>Total</strong></td>
+                                <td colspan="2"><strong><?= $det['cost'] ?></strong></td>
+                            </tr>
                         </table>
                     </div>
                 </div>

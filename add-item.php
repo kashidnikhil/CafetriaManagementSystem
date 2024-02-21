@@ -1,136 +1,207 @@
-<!DOCTYPE html>
 <?php 
-    include('sessioncust.php');
+    include('sessionemp.php');
 
     $uname = $_SESSION['login_user'];
     $sql = "SELECT * from employee where eid='$uname'";
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 ?>
-<html>
-    <head>
-        <title>SJT Canteen</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="css/grid.css">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    </head>
-    <body>
-        <section class="section-plans">
-            <div class="row">
-                <div class="col span-6-of-12">
-                    <?php       
-                        $cid = $row['cid'];
-                        $canteen = "SELECT * from canteen where cid='$cid'";
-                        $res = mysqli_query($db,$canteen);
-                        $cantrow = mysqli_fetch_array($res,MYSQLI_ASSOC);
-                    ?>
-                    <img src="images/person.png" class="profile-img">
-                    <div style="display: inline-block; vertical-align: super">
-                        <?php echo $row['name']?><br>
-                        <?php 
-                            $cant=$cantrow['name'];
-                            $loc=$cantrow['location'];
-                            echo "$cant, $loc"; 
-                        ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="Templatemanja" name="author">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Tashan Restaurant and Cafe HTML5 Template.">
+
+<!-- SITE TITLE -->
+<title>Pannash Greens</title>
+<!-- Favicon Icon -->
+<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png">
+<!-- Animation CSS -->
+<link rel="stylesheet" href="assets/css/animate.css">   
+<!-- Latest Bootstrap min CSS -->
+<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css?family=Kaushan+Script&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:100,100i,300,300i,400,400i,600,600i,700,700i&display=swap" rel="stylesheet"> 
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i&display=swap" rel="stylesheet"> 
+<!-- Icon Font CSS -->
+<link rel="stylesheet" href="assets/css/all.min.css">
+<link rel="stylesheet" href="assets/css/ionicons.min.css">
+<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets/css/linearicons.css">
+<link rel="stylesheet" href="assets/css/flaticon.css">
+<!--- owl carousel CSS-->
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.carousel.min.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.css">
+<link rel="stylesheet" href="assets/owlcarousel/css/owl.theme.default.min.css">
+<!-- Slick CSS -->
+<link rel="stylesheet" href="assets/css/slick.css">
+<link rel="stylesheet" href="assets/css/slick-theme.css">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" href="assets/css/magnific-popup.css">
+<!-- DatePicker CSS -->
+<link href="assets/css/datepicker.min.css" rel="stylesheet">
+<!-- TimePicker CSS -->
+<link href="assets/css/mdtimepicker.min.css" rel="stylesheet">
+<!-- Style CSS -->
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/responsive.css">
+<link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
+
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div id="preloader">
+    <div class="loader_wrap">
+        <div class="sk-chase">
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+          <div class="sk-chase-dot"></div>
+        </div>
+    </div>
+</div>
+<!-- END LOADER -->  
+
+<?php include('header_cust.php'); ?>
+
+<!-- START SECTION OUR MENU -->
+<div class="section pb_70">
+    <div class="container">
+        <div class="row">
+            
+            <?php include('sidebar_cust.php'); ?>
+
+            <div class="col-lg-9 col-sm-12 col-12">
+                <!-- START SECTION BREADCRUMB -->
+                <div class="breadcrumb_section background_bg page_title_light">
+                    <div class="page-title">
+                        <h1>Add Food Item</h1>
                     </div>
                 </div>
-                <div class="col span-6-of-12 header-btn">
-                    <a href="empprof.php" class="custom-btn">Profile</a>
-                    <a href="index.php" class="custom-btn">Logout</a>
-                </div>
-            </div>
-        </section>
-        <section class="section-cant">
-            <div class="row">
-                <h2>Food Category</h2>
-            </div>
-            <div class="row">
-                <form method="post" id="sjt" name="sjt" class="custom-form" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
-                    <?php
-                        $catQuery = "select * from food_category";
-                        $catMQ = mysqli_query($db,$catQuery);
-
-                        if(isset($_POST['Submit'])){
-                            $target_dir = "uploads/";
-                            $extension = explode(".", $_FILES["image"]["name"]);
-                            $file_name = time(). "." .end($extension);
-                            $target_file = $target_dir . $file_name;
-
-                            if ($_FILES["image"]["name"]) {
-                              move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
-                            }
-
-                            $image = $file_name;
-                            $item = $_POST['item'];
-                            $category = $_POST['category'];
-                            $price = $_POST['price'];
-                            $time = $_POST['time'];
-
-                            $add = "INSERT into sjtalacarte(name,category,image,price,time) values ('$item','$category','$image','$price','$time')";
-                            $retval = mysqli_query($db,$add);
-                            if($retval) {
-                        ?>
-                        <script>
-                            alert("Item added successfully.");
-                            window.location.href="items-list.php";
-                        </script>
-                    <?php
-                            }
-                        }
-                    ?>
-                    <label for="image" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Image</label>
-                    <input type="file" id="image" name="image" style="margin:2vw 4vw;" required>
-                    <br>
-                    <label for="item" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Item Name</label>
-                    <input type="text" id="item" name="item" style="margin:2vw 4vw;" required>
-                    <br>
-                    <label for="category" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Item Name</label>
-                    <select name="category" id="category" style="margin:2vw 4vw;" required>
+                <!-- END SECTION BREADCRUMB -->
+                <div class="row">
+                    <div class="col-12">
                         <?php
-                            while($cat = mysqli_fetch_array($catMQ, MYSQLI_ASSOC)){
-                                echo "<option value='".$cat['id']."'>".$cat['category']."</option>";
+                            $catQuery = "select * from food_category";
+                            $catMQ = mysqli_query($db,$catQuery);
+
+                            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                                $target_dir = "uploads/";
+                                $extension = explode(".", $_FILES["image"]["name"]);
+                                $file_name = time(). "." .end($extension);
+                                $target_file = $target_dir . $file_name;
+
+                                if ($_FILES["image"]["name"]) {
+                                  move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                                }
+
+                                $image = $file_name;
+                                $item = $_POST['item'];
+                                $desc = $_POST['description'];
+                                $category = $_POST['category'];
+                                $price = $_POST['price'];
+                                $time = $_POST['time'];
+
+                                $add = "INSERT into sjtalacarte(name,description,category,image,price,time) values ('$item','$desc','$category','$image','$price','$time')";
+                                $retval = mysqli_query($db,$add);
+                                if($retval) {
+                                ?>
+                                    <script>
+                                        alert("Item added successfully.");
+                                        window.location.href="items-list.php";
+                                    </script>
+                                <?php
+                                }
                             }
-                        ?>                        
-                    </select>
-                    <br>
-                    <label for="price" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Price</label>
-                    <input type="number" id="price" name="price" style="margin:2vw 4vw;" required>
-                    <br>
-                    <label for="time" style="font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px; margin-left:4vw;">Time</label>
-                    <input type="number" id="time" name="time" style="margin:2vw 4vw;" required>
-                    <br>
-                    <input type="submit" for="sjt" value="Submit" id="Submit" name="Submit" style="box-shadow: 4px 4px 10px rgba(12, 10, 72, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f; color: white; font-family: 'Lato','Arial', sans-serif;font-weight: 300;font-size: 20px;margin-left:35vw; margin-botton:4vw;"><br>
-                </form>
+                        ?>
+                        <form method="post" class="row" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+                            <div class="form-group col-12">
+                                <label>Image</label>
+                                <input type="file" class="form-control" id="image" name="image" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Item Name</label>
+                                <input type="text" class="form-control"  id="item" name="item" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" id="description" rows="2" maxlength="300" required></textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Category</label><br/>
+                                <div class="custom_select">
+                                    <select name="category" id="category" required>
+                                        <?php while($cat = mysqli_fetch_array($catMQ, MYSQLI_ASSOC)) { ?>
+                                            <option value="<?= $cat['id'] ?>"><?= $cat['category'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Price</label>
+                                <input type="number" class="form-control" id="price" name="price" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Time</label>
+                                <input type="number" class="form-control" id="time" name="time" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
             </div>
-        </section>
-        <section class="section-plans">
-            <div class="row">
-                <div class="col span-1-of-1 dashboard-menu">
-                    <a style="text-decoration: none; color:#18314f;" href="emordstat.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
-                            Pending Orders
-                        </div>
-                    </a>
-                    <a style="text-decoration: none; color: white;" href="emordview.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                            Completed Orders
-                        </div>
-                    </a>
-                    <a style="text-decoration: none; color: white;" href="items-list.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;background-color: #18314f;">
-                            View Items
-                        </div>
-                    </a>
-                    <a style="text-decoration: none; color:#18314f;" href="food-category-list.php">
-                        <div class="col span-1-of-1" style="box-shadow: 4px 4px 10px rgba(72, 39, 10, 0.15); text-align: center; padding: 1%;border: 2px solid #18314f;">
-                            View Category
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
-   </body>
+        </div>
+    </div>
+</div>
+<!-- START SECTION OUR MENU -->
+
+<?php include('footer.php'); ?>
+
+<!-- <a href="#" class="scrollup" style="display: none;"><i class="ion-ios-arrow-up"></i></a>  -->
+
+<!-- Latest jQuery --> 
+<script src="assets/js/jquery-1.12.4.min.js"></script> 
+<!-- Latest compiled and minified Bootstrap --> 
+<script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+<!-- owl-carousel min js  --> 
+<script src="assets/owlcarousel/js/owl.carousel.min.js"></script> 
+<!-- magnific-popup min js  --> 
+<script src="assets/js/magnific-popup.min.js"></script> 
+<!-- waypoints min js  --> 
+<script src="assets/js/waypoints.min.js"></script> 
+<!-- parallax js  --> 
+<script src="assets/js/parallax.js"></script> 
+<!-- countdown js  --> 
+<script src="assets/js/jquery.countdown.min.js"></script> 
+<!-- jquery.countTo js  -->
+<script src="assets/js/jquery.countTo.js"></script>
+<!-- imagesloaded js --> 
+<script src="assets/js/imagesloaded.pkgd.min.js"></script>
+<!-- isotope min js --> 
+<script src="assets/js/isotope.min.js"></script>
+<!-- jquery.appear js  -->
+<script src="assets/js/jquery.appear.js"></script>
+<!-- jquery.dd.min js -->
+<script src="assets/js/jquery.dd.min.js"></script>
+<!-- slick js -->
+<script src="assets/js/slick.min.js"></script>
+<!-- DatePicker js -->
+<script src="assets/js/datepicker.min.js"></script>
+<!-- TimePicker js -->
+<script src="assets/js/mdtimepicker.min.js"></script>
+<!-- scripts js --> 
+<script src="assets/js/scripts.js"></script>
+
+</body>
 </html>
