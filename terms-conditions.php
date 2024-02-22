@@ -1,36 +1,3 @@
-<?php
-    session_unset();
-    session_start();
-
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // username and password sent from form 
-        define('DB_SERVER', 'localhost');
-        define('DB_USERNAME', 'root');
-        define('DB_PASSWORD', '');
-        define('DB_DATABASE', 'canteenmgmt');
-        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-
-        $myusername = mysqli_real_escape_string($db,$_POST['uname']);
-        $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
-
-        $sql = "SELECT custid FROM sauth WHERE  custid= '$myusername' and pwd = '$mypassword'";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $error="Enter details.";
-        $count = mysqli_num_rows($result);
-
-        // If result matched $myusername and $mypassword, table row must be 1 row
-        if($count == 1) {
-            $_SESSION['login_user'] = $myusername;
-            $_SESSION['emp_user'] = $myusername;
-            echo "done";
-            header("location: homepage.php");
-        }
-        else {
-            echo "<script>alert('Enter correct details');window.location.href='employee.php';</script>";
-        }
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,34 +79,16 @@
 <!-- START SECTION LOGIN -->
 <div class="section">
 	<div class="container">
-    	<div class="row justify-content-center">
-            <div class="col-lg-6 col-md-8">
-                <div class="lr_form box_shadow1 radius_all_10 animation" data-animation="fadeInUp" data-animation-delay="0.02s">
-                    <div class="heading_s1 text-center pb-md-3">
-                        <h2>Login to Your Account</h2>
-                    </div>
-                    <form method="post" class="form_style1" action="<?php $_PHP_SELF ?>">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="uname" name="uname" placeholder="Username" required>
-                        </div>
-                        <div class="form-group">
-                            <input class="form-control" type="password" id="pwd" name="pwd" Placeholder="Password" required>
-                        </div>
-                        <!-- <div class="login_footer form-group">
-                        	<a href="#">Forgot password?</a>
-                            <div class="chek-form">
-                                <div class="custome-checkbox">
-                                    <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox3" value="">
-                                    <label class="form-check-label" for="exampleCheckbox3">Remember me</label>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-default btn-block" name="login">Login</button>
-                        </div>
-                    </form>
-                    <div class="form-note text-center">Don't have an account? <a href="register-customer.php" class="text_default">Sign Up</a></div>
-                </div>
+    	<div class="row">
+            <div class="col-12">
+                <h1>Terms & Conditions</h1>
+                <p></p>
+
+                <h2>Cookie Policy</h2>
+                <p></p>
+
+                <h2>Privacy Policy</h2>
+                <p></p>
             </div>
         </div>
     </div>
