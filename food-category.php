@@ -93,12 +93,13 @@
                         <?php
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 $target_dir = "uploads/";
-                                $extension = explode(".", $_FILES["image"]["name"]);
-                                $file_name = time(). "." .end($extension);
-                                $target_file = $target_dir . $file_name;
+                                $file_name = '';
 
                                 if ($_FILES["image"]["name"]) {
-                                  move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                                    $extension = explode(".", $_FILES["image"]["name"]);
+                                    $file_name = time(). "." .end($extension);
+                                    $target_file = $target_dir . $file_name;
+                                    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
                                 }
 
                                 $image = $file_name;

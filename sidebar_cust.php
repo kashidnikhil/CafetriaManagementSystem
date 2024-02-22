@@ -4,6 +4,6 @@
                 <a href="food-category-list.php">View Category</a>
                 <a href="emordstat.php">Pending Orders</a>
                 <a href="emordview.php">Completed Orders</a>
-                <a href="profile.php">Profile</a>
-                <a href="index.php">Logout</a>
+                <a href="empprof.php">Profile</a>
+                <a href="customer.php">Logout</a>
             </div>

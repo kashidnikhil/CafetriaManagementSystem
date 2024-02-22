@@ -7228,6 +7228,21 @@ table.items-list td {
 }
 
 
+label.mr-10 {
+	margin-right: 10px;
+}
+label.mr-20 {
+	margin-right: 20px;
+}
+
+
+
+img.size-80 {
+	width: 80px;
+}
+
+
+
 @media (max-width: 991px) {
 	.header_wrap:not([class*="bg_"]):not([class*="bg-"]) {
 		position: relative;

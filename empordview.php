@@ -85,7 +85,7 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Order Number: <?php echo $oid; ?></h1>
+                        <h1>Order Number: <?= $oid; ?></h1>
                     </div>
                 </div>
                 <div class="row">
@@ -122,6 +122,7 @@
                                 <td><strong><?= $det['cost'] ?></strong></td>
                             </tr>
                         </table>
+                        <p><strong>Note:</strong> <?= $det['note'] ?></p>
                     </div>
                 </div> 
             </div>

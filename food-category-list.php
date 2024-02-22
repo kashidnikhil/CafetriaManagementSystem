@@ -94,6 +94,7 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Category</th>
+                                <th>Action</th>
                             </tr>
                             <?php 
                                 $qb = "SELECT * FROM food_category";
@@ -104,6 +105,9 @@
                             <tr>
                                 <td><img src="uploads/<?= $item['image'] ?>"/></td>
                                 <td><?= $item['category'] ?></td>
+                                <td>
+                                    <a href="edit-food-category.php?catid=<?= $item['id'] ?>"><i class="ti-pencil"></i></a>
+                                </td>
                             </tr>
                             <?php } ?>
                         </table>

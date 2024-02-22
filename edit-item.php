@@ -5,6 +5,7 @@
     $sql = "SELECT * from employee where eid='$uname'";
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $iid = $_GET['iid'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,38 +85,86 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Food Items List</h1>
+                        <h1>Add Food Item</h1>
                     </div>
                 </div>
+                <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
-                        <a href="add-item.php" class="btn btn-sm btn-default">Add Item</a><br/><br/>
-                        <table class="table items-list">
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Price (Rs.)</th>
-                                <th>Action</th>
-                            </tr>
-                            <?php 
-                                $qb = "SELECT sjt.*, fc.category AS category FROM sjtalacarte AS sjt LEFT JOIN food_category AS fc ON fc.id=sjt.category";
-                                $mb = mysqli_query($db,$qb);
+                        <?php
+                            $catQuery = "select * from food_category";
+                            $catMQ = mysqli_query($db,$catQuery);
 
-                                while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                            ?>
-                            <tr>
-                                <td><img src="uploads/<?= $item['image'] ?>"/></td>
-                                <td><?= $item['name'] ?></td>
-                                <td><?= $item['category'] ?></td>
-                                <td><?= $item['price'] ?></td>
-                                <td>
-                                    <a href="edit-item.php?iid=<?= $item['iid'] ?>"><i class="ti-pencil"></i></a>
-                                    <a href="delete-item.php?iid=<?= $item['iid'] ?>" class="cancelled" onclick="return confirm('Do you really want to delete <?= $item['name'] ?>');"><i class="ti-trash"></i></a>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </table>
+                            $itQue = "select * from sjtalacarte where iid=$iid";
+                            $itMQ = mysqli_query($db,$itQue);
+                            $itemDet = mysqli_fetch_array($itMQ, MYSQLI_ASSOC);
+                            $file_name = $itemDet['image'];
+
+                            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                                $target_dir = "uploads/";
+
+                                if ($_FILES["image"]["name"]) {
+	                                $extension = explode(".", $_FILES["image"]["name"]);
+	                                $file_name = time(). "." .end($extension);
+	                                $target_file = $target_dir . $file_name;
+                                  	move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                                }
+
+                                $image = $file_name;
+                                $item = $_POST['item'];
+                                $desc = $_POST['description'];
+                                $category = $_POST['category'];
+                                $price = $_POST['price'];
+                                $time = $_POST['time'];
+
+                                $edit = "UPDATE sjtalacarte SET name='$item', description='$desc', category='$category', image='$image', price=$price, `time`=$time WHERE iid=$iid";
+                                $retval = mysqli_query($db,$edit);
+                                if($retval) {
+                                ?>
+                                    <script>
+                                        alert("Item updated successfully.");
+                                        window.location.href="items-list.php";
+                                    </script>
+                                <?php
+                                }
+                            }
+                        ?>
+                        <form method="post" class="row" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+                            <div class="form-group col-12">
+                                <label>Image</label>
+                                <img src="uploads/<?= $itemDet['image'] ?>" class="size-80"/>
+                                <input type="file" class="form-control" id="image" name="image"/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Item Name</label>
+                                <input type="text" class="form-control" id="item" name="item" value="<?= $itemDet['name'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" id="description" rows="2" maxlength="300"><?= $itemDet['description'] ?></textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Category</label><br/>
+                                <div class="custom_select">
+                                    <select name="category" id="category" required>
+                                        <?php while($cat = mysqli_fetch_array($catMQ, MYSQLI_ASSOC)) { ?>
+                                            <option value="<?= $cat['id'] ?>" <?= $itemDet['category']==$cat['id']?'selected':'' ?>><?= $cat['category'] ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Price</label>
+                                <input type="number" class="form-control" id="price" name="price" value="<?= $itemDet['price'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Time</label>
+                                <input type="number" class="form-control" id="time" name="time" value="<?= $itemDet['time'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-default">Update</button>
+                            </div>
+                        </form>
                     </div>
                 </div> 
             </div>

@@ -5,6 +5,7 @@
     $sql = "SELECT * from employee where eid='$uname'";
     $result = mysqli_query($db,$sql);
     $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    $catId = $_GET['catid'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,38 +85,62 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Food Items List</h1>
+                        <h1>Add Food Category</h1>
                     </div>
                 </div>
+                <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
-                        <a href="add-item.php" class="btn btn-sm btn-default">Add Item</a><br/><br/>
-                        <table class="table items-list">
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Category</th>
-                                <th>Price (Rs.)</th>
-                                <th>Action</th>
-                            </tr>
-                            <?php 
-                                $qb = "SELECT sjt.*, fc.category AS category FROM sjtalacarte AS sjt LEFT JOIN food_category AS fc ON fc.id=sjt.category";
-                                $mb = mysqli_query($db,$qb);
+                        <?php
+                            $catQue = "select * from food_category where id=$catId";
+                            $catMQ = mysqli_query($db,$catQue);
+                            $catDet = mysqli_fetch_array($catMQ, MYSQLI_ASSOC);
+                            $file_name = $catDet['image'];
 
-                                while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                            ?>
-                            <tr>
-                                <td><img src="uploads/<?= $item['image'] ?>"/></td>
-                                <td><?= $item['name'] ?></td>
-                                <td><?= $item['category'] ?></td>
-                                <td><?= $item['price'] ?></td>
-                                <td>
-                                    <a href="edit-item.php?iid=<?= $item['iid'] ?>"><i class="ti-pencil"></i></a>
-                                    <a href="delete-item.php?iid=<?= $item['iid'] ?>" class="cancelled" onclick="return confirm('Do you really want to delete <?= $item['name'] ?>');"><i class="ti-trash"></i></a>
-                                </td>
-                            </tr>
-                            <?php } ?>
-                        </table>
+                            if($_SERVER['REQUEST_METHOD'] == 'POST'){
+                                $target_dir = "uploads/";
+
+                                if ($_FILES["image"]["name"]) {
+                                    $extension = explode(".", $_FILES["image"]["name"]);
+                                    $file_name = time(). "." .end($extension);
+                                    $target_file = $target_dir . $file_name;
+                                    move_uploaded_file($_FILES["image"]["tmp_name"], $target_file);
+                                }
+
+                                $image = $file_name;
+                                $category = $_POST['category'];
+                                $desc = $_POST['description'];
+
+                                $edit = "UPDATE food_category SET category='$category', description='$desc', image='$image' WHERE id=$catId";
+                                $retval = mysqli_query($db,$edit);
+                                if($retval) {
+                                ?>
+                                    <script>
+                                        alert("Category updated successfully.");
+                                        window.location.href="food-category-list.php";
+                                    </script>
+                                <?php
+                                }
+                            }
+                        ?>
+                        <form method="post" class="row" action="<?php $_PHP_SELF ?>" enctype="multipart/form-data">
+                            <div class="form-group col-12">
+                                <label>Image</label>
+                                <img src="uploads/<?= $catDet['image'] ?>" class="size-80"/>
+                                <input type="file" class="form-control" id="image" name="image"/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Category</label>
+                                <input type="text" class="form-control"  id="category" name="category" value="<?= $catDet['category'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Description</label>
+                                <textarea class="form-control" name="description" id="description" rows="2" maxlength="300"><?= $catDet['description'] ?></textarea>
+                            </div>
+                            <div class="form-group col-12">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div> 
             </div>
