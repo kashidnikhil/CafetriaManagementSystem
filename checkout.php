@@ -52,8 +52,39 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const confirmModal = (message, formId='') => {
+        Swal.fire({
+            text: message,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Yes",
+            denyButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(formId != '') {
+                    document.getElementById(formId).submit();
+                }
+            }
+        });
+    }
+
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -153,14 +184,21 @@
                                         sendMail("cssonawane32@gmail.com", "Pannash Greens - Order No. $oid", $mailBody);//$emailId
 
                                         unset($_SESSION['cart']);
-                                        echo "<script>alert('Order Placed!');</script>";
-                                        echo "<script>window.location.href='stordstat.php';</script>";
+                                        ?>
+                                        <script>
+                                            simpleModal("Order placed successfully.", "stordstat.php");
+                                        </script>
+                                        <?php
                                     } else {
-                                        echo "<script>alert('Not enough Balance in your wallet');</script>";
+                                        ?>
+                                        <script>
+                                            simpleModal("Not enough Balance in your wallet.");
+                                        </script>
+                                        <?php
                                     }
                                 }
                             ?>
-                            <form method="POST" action="<?php $_PHP_SELF ?>">
+                            <form method="POST" id="order-form" action="<?php $_PHP_SELF ?>">
                             <div class="table-responsive order_table">
                                 <table class="table">
                                     <thead>
@@ -228,7 +266,7 @@
                                     <div class="custome-radio">
                                         <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" value="option3" checked="">
                                         <label class="form-check-label" for="exampleRadios3">Direct Bank Transfer</label>
-                                        <p data-method="option3" class="payment-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration. </p>
+                                        <!--p data-method="option3" class="payment-text">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration. </p-->
                                     </div>
                                     <div class="custome-radio">
                                         <input class="form-check-input" type="radio" name="payment_option" id="exampleRadios4" value="option4">
@@ -244,7 +282,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-default">Place Order</button>
+                            <a href="counters.php" class="btn btn-sm btn-default">Add More</a>
+                            <a href="#" class="btn btn-sm btn-default" id="placeOrder">Place Order</a>
+                            <!-- <button type="submit" class="btn btn-default">Place Order</button> -->
                             <?php } ?>
                             </form>
                         </div>
@@ -352,6 +392,11 @@
             $("#cartTable").html(tableStr);
             $("#cartTotalAmt, .cartTotalAmt").text(total);
         }
+
+        $("a#placeOrder").click((e) => {
+            e.preventDefault();
+            confirmModal("Do you want to place order?", "order-form");
+        });
     });
 </script>
 

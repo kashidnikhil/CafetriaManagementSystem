@@ -84,14 +84,36 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Dashboard</h1>
+                        <h1>Counters</h1>
                     </div>
                 </div>
                 <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
-                        <h3>Are you confused, what to order?</h3>
-                        <a href="counters.php" class="btn btn-default">Click Here</a>
+                        <div class="row">
+                            <?php
+                                $fcQuery = "SELECT * from food_category";
+                                $fcRes = mysqli_query($db,$fcQuery);
+                                while($item = mysqli_fetch_array($fcRes, MYSQLI_ASSOC)){
+                            ?>
+                            <div class="col-lg-4 col-sm-6">
+                                <a href="counter-items.php?counter=<?= $item['id'] ?>">
+                                <div class="single_product">
+                                    <div class="menu_product_img">
+                                        <img src="uploads/<?= $item['image'] ?>" alt="<?= $item['category'] ?>">
+                                        <!-- <div class="action_btn"><a href="#" class="btn btn-white">Add To Cart</a></div> -->
+                                    </div>
+                                    <div class="menu_product_info">
+                                        <div class="title">
+                                            <h5><a href="#"><?= $item['category'] ?></a></h5>
+                                        </div>
+                                        <!-- <p>Lorem Ipsum is simply dummy text of the printing and industry.</p> -->
+                                    </div>
+                                </div>
+                                </a>
+                            </div>
+                            <?php } ?>
+                        </div>
                     </div>
                 </div> 
             </div>

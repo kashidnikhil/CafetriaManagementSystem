@@ -1,49 +1,3 @@
-<?php
-    include('sendmail.php');
-
-    function random_strings($length_of_string)
-    {
-      $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-      return substr(str_shuffle($str_result), 0, $length_of_string);
-    }
-    
-    session_start();
-
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // username and password sent from form 
-        define('DB_SERVER', 'localhost');
-        define('DB_USERNAME', 'root');
-        define('DB_PASSWORD', '');
-        define('DB_DATABASE', 'canteenmgmt');
-        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-
-        if(isset($_SESSION['OTP']) && $_SESSION['OTP'] == $_POST['code']) {
-            $custid = strtoupper(random_strings(9));
-            $fullname = mysqli_real_escape_string($db,$_POST['full_name']);
-            $email = mysqli_real_escape_string($db,$_POST['email']);
-            $phone = mysqli_real_escape_string($db,$_POST['phone']);
-            $pwd = mysqli_real_escape_string($db,$_POST['pwd']);
-
-            $sql = "INSERT into customer(custid,name,wallet,phone,email) values ('$custid','$fullname',5000,'$phone','$email')";
-            $result = mysqli_query($db,$sql);
-
-            $sql1 = "INSERT into sauth(custid,pwd) values ('$custid','$pwd')";
-            $result1 = mysqli_query($db,$sql1);
-
-            $mailBody = "Dear customer,<br/><br/>
-            Your account is created.<br/>
-            Your username is <strong>".$custid."</strong>";
-            sendMail($email, "Pannash Greens - Account Created", $mailBody);
-
-            if($result) {
-                echo "<script>alert('Register successful!');</script>";
-                echo "<script>window.location.href='employee.php';</script>";
-            }
-        } else {
-            echo "<script>alert('Invalid code!');</script>";
-        }
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,8 +42,76 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
+<?php
+    include('sendmail.php');
+
+    function random_strings($length_of_string)
+    {
+      $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      return substr(str_shuffle($str_result), 0, $length_of_string);
+    }
+    
+    session_start();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // username and password sent from form 
+        define('DB_SERVER', 'localhost');
+        define('DB_USERNAME', 'root');
+        define('DB_PASSWORD', '');
+        define('DB_DATABASE', 'canteenmgmt');
+        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+        if(isset($_SESSION['OTP']) && $_SESSION['OTP'] == $_POST['code']) {
+            $custid = strtoupper(random_strings(9));
+            $fullname = mysqli_real_escape_string($db,$_POST['full_name']);
+            $email = mysqli_real_escape_string($db,$_POST['email']);
+            $phone = mysqli_real_escape_string($db,$_POST['phone']);
+            $pwd = mysqli_real_escape_string($db,$_POST['pwd']);
+
+            $sql = "INSERT into customer(custid,name,wallet,phone,email) values ('$custid','$fullname',5000,'$phone','$email')";
+            $result = mysqli_query($db,$sql);
+
+            $sql1 = "INSERT into sauth(custid,pwd) values ('$custid','$pwd')";
+            $result1 = mysqli_query($db,$sql1);
+
+            $mailBody = "Dear customer,<br/><br/>
+            Your account is created.<br/>
+            Your username is <strong>".$custid."</strong>";
+            sendMail($email, "Pannash Greens - Account Created", $mailBody);
+
+            if($result) {
+            ?>
+            <script>
+                simpleModal("Registered successful.", "employee.php");
+            </script>
+            <?php
+            }
+        } else {
+            ?>
+            <script>
+                simpleModal("Invalid code.");
+            </script>
+            <?php
+        }
+    }
+?>
 </head>
 
 <body>
@@ -228,7 +250,7 @@
         type: "POST",
         data: "email="+$("#email").val(),
         success: function(result){
-          alert("OTP sent to your email account.");
+            simpleModal("OTP sent to your email account.");
         }  
       });
     });

@@ -50,8 +50,23 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -117,8 +132,7 @@
                                 if($retval) {
                                 ?>
                                     <script>
-                                        alert("Item added successfully.");
-                                        window.location.href="items-list.php";
+                                        simpleModal("Item added successfully.", "items-list.php");
                                     </script>
                                 <?php
                                 }
@@ -138,7 +152,7 @@
                                 <textarea class="form-control" name="description" id="description" rows="2" maxlength="300"></textarea>
                             </div>
                             <div class="form-group col-12">
-                                <label>Category</label><br/>
+                                <label>Counter</label><br/>
                                 <div class="custom_select">
                                     <select name="category" id="category" required>
                                         <?php while($cat = mysqli_fetch_array($catMQ, MYSQLI_ASSOC)) { ?>

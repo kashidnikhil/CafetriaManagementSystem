@@ -1,36 +1,3 @@
-<?php
-    session_unset();
-    session_start();
-
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // username and password sent from form 
-        define('DB_SERVER', 'localhost');
-        define('DB_USERNAME', 'root');
-        define('DB_PASSWORD', '');
-        define('DB_DATABASE', 'canteenmgmt');
-        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
-
-        $myusername = mysqli_real_escape_string($db,$_POST['uname']);
-        $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
-
-        $sql = "SELECT custid FROM sauth WHERE  custid= '$myusername' and pwd = '$mypassword'";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $error="Enter details.";
-        $count = mysqli_num_rows($result);
-
-        // If result matched $myusername and $mypassword, table row must be 1 row
-        if($count == 1) {
-            $_SESSION['login_user'] = $myusername;
-            $_SESSION['emp_user'] = $myusername;
-            echo "done";
-            header("location: homepage.php");
-        }
-        else {
-            echo "<script>alert('Enter correct details');window.location.href='employee.php';</script>";
-        }
-    }
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,11 +42,59 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
+<?php
+    session_start();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        // username and password sent from form 
+        define('DB_SERVER', 'localhost');
+        define('DB_USERNAME', 'root');
+        define('DB_PASSWORD', '');
+        define('DB_DATABASE', 'canteenmgmt');
+        $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
+
+        $myusername = mysqli_real_escape_string($db,$_POST['uname']);
+        $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
+
+        $sql = "SELECT custid FROM sauth WHERE custid='$myusername' and pwd='$mypassword'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $count = mysqli_num_rows($result);
+
+        // If result matched $myusername and $mypassword, table row must be 1 row
+        if($count == 1) {
+            $_SESSION['login_user'] = $myusername;
+            $_SESSION['emp_user'] = $myusername;
+            header("location: homepage.php");
+        } else {
+            ?>
+            <script>
+                simpleModal("Enter correct details.");
+            </script>
+            <?php
+        }
+    }
+?>
 
 <!-- LOADER -->
 <div id="preloader">
@@ -116,6 +131,8 @@
             <div class="col-lg-6 col-md-8">
                 <div class="lr_form box_shadow1 radius_all_10 animation" data-animation="fadeInUp" data-animation-delay="0.02s">
                     <div class="heading_s1 text-center pb-md-3">
+                        <h3>Hungry? Don't Have Time To Stand In Queue?<br/>
+                        Use PannashGreensEats To Resolve Your Hunger And Save Your Precious Time.</h3>
                         <h2>Login to Your Account</h2>
                     </div>
                     <form method="post" class="form_style1" action="<?php $_PHP_SELF ?>">

@@ -5,5 +5,5 @@
                 <a href="emordstat.php">Pending Orders</a>
                 <a href="emordview.php">Completed Orders</a>
                 <a href="empprof.php">Profile</a>
-                <a href="customer.php">Logout</a>
+                <a href="logout.php">Logout</a>
             </div>

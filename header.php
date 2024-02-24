@@ -53,7 +53,10 @@
                     </ul>
                     <div class="cart_footer">
                         <p class="cart_total"><strong>Total:</strong> <span class="cart_price"> <span class="price_symbole">Rs. </span><span id="cartTotalAmt"><?= $cartTotal ?></span></span></p>
-                        <p class="cart_buttons"><a href="checkout.php" class="btn btn-default btn-radius checkout">Checkout</a></p>
+                        <p class="cart_buttons">
+                            <a href="counters.php" class="btn btn-sm btn-default checkout">Add More</a>
+                            <a href="checkout.php" class="btn btn-sm btn-default checkout">Checkout</a>
+                        </p>
                     </div>
                 </div>
             </div>

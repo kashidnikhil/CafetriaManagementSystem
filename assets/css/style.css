@@ -7176,6 +7176,10 @@ table a.item-remove {
 	background-color: transparent;
 }
 
+a i {
+	pointer-events: none;
+}
+
 
 #rating-star {
 	display: inline-block;

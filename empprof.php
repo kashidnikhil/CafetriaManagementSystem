@@ -51,8 +51,23 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -106,22 +121,29 @@
                                 if(strcmp($o,$item['pwd'])==0){
                                     $add = "update eauth set pwd='$n' where eid='$eid'";
                                     $retval = mysqli_query($db,$add);
-                                    echo "<script>alert('Password updated successfully!')</script>";
-                                    header('Location: emphome.php');
+                                ?>
+                                <script>
+                                    simpleModal("Password updated successfully.", "emphome.php");
+                                </script>
+                                <?php
                                 }
                                 else{
-                                    echo "<script>alert('Enter Correct Password!')</script>";
+                                ?>
+                                <script>
+                                    simpleModal("Enter Correct Password.");
+                                </script>
+                                <?php
                                 }
                             }
                         ?>
                         <form method="post" class="row" action="<?php $_PHP_SELF ?>">
                             <div class="form-group col-12">
                                 <label>Old Password</label>
-                                <input type="text" class="form-control" id="oldpwd" name="oldpwd" required/>
+                                <input type="password" class="form-control" id="oldpwd" name="oldpwd" required/>
                             </div>
                             <div class="form-group col-12">
                                 <label>New Password</label>
-                                <input type="text" class="form-control" id="newpwd" name="newpwd" required/>
+                                <input type="password" class="form-control" id="newpwd" name="newpwd" required/>
                             </div>
                             <div class="form-group col-12">
                                 <button type="submit" class="btn btn-default">Change Password</button>

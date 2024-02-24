@@ -50,8 +50,29 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const confirmModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: "Yes",
+            denyButtonText: "No"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if(redirect != '') {
+                    window.location.href = redirect;
+                }
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -94,7 +115,7 @@
                             <tr>
                                 <th>Image</th>
                                 <th>Name</th>
-                                <th>Category</th>
+                                <th>Counter</th>
                                 <th>Price (Rs.)</th>
                                 <th>Action</th>
                             </tr>
@@ -111,7 +132,7 @@
                                 <td><?= $item['price'] ?></td>
                                 <td>
                                     <a href="edit-item.php?iid=<?= $item['iid'] ?>"><i class="ti-pencil"></i></a>
-                                    <a href="delete-item.php?iid=<?= $item['iid'] ?>" class="cancelled" onclick="return confirm('Do you really want to delete <?= $item['name'] ?>');"><i class="ti-trash"></i></a>
+                                    <a href="#" class="cancelled delete-item" item-id="<?= $item['iid'] ?>" item-name="<?= $item['name'] ?>"><i class="ti-trash"></i></a>
                                 </td>
                             </tr>
                             <?php } ?>
@@ -161,5 +182,16 @@
 <!-- scripts js --> 
 <script src="assets/js/scripts.js"></script>
 
+<script>
+    $(document).ready(function(){
+        $("a.delete-item").click((e) => {
+            e.preventDefault();
+
+            let itemId = e.target.getAttribute("item-id");
+            let itemName = e.target.getAttribute("item-name");
+            confirmModal(`Do you really want to delete ${itemName}?`, `delete-item.php?iid=${itemId}`);
+        });
+    });
+</script>
 </body>
 </html>

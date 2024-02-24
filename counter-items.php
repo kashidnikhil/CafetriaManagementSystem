@@ -81,17 +81,58 @@
             <?php include('sidebar.php'); ?>
 
             <div class="col-lg-9 col-sm-12 col-12">
+                <?php
+                    $fcQuery = "SELECT * FROM food_category WHERE id=".$_GET['counter'];
+                    $fcRes = mysqli_query($db,$fcQuery);
+                    $category = mysqli_fetch_array($fcRes, MYSQLI_ASSOC);
+                ?>
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Dashboard</h1>
+                        <h1><?= $category['category'] ?> Menu</h1>
                     </div>
                 </div>
                 <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
-                        <h3>Are you confused, what to order?</h3>
-                        <a href="counters.php" class="btn btn-default">Click Here</a>
+                        <div class="row">
+                            <?php
+                                $iQuery = "SELECT * FROM sjtalacarte WHERE category=".$category['id'];
+                                $iRes = mysqli_query($db,$iQuery);
+                                while($item = mysqli_fetch_array($iRes, MYSQLI_ASSOC)) {
+                            ?>
+                            <div class="col-lg-4 col-sm-6">
+                                <div class="single_product">
+                                    <div class="menu_product_img">
+                                        <img src="uploads/<?= $item['image'] ?>" alt="<?= $item['name'] ?>">
+                                        <!-- <div class="action_btn"><a href="#" class="btn btn-white">Add To Cart</a></div> -->
+                                    </div>
+                                    <div class="menu_product_info">
+                                        <div class="title">
+                                            <h5><a href="#"><?= $item['name'] ?></a></h5>
+                                        </div>
+                                        <!-- <p>Lorem Ipsum is simply dummy text of the printing and industry.</p> -->
+                                    </div>
+                                    <div class="menu_footer">
+                                        <div class="price">
+                                            <span>Rs. <?= $item['price'] ?></span>
+                                        </div>
+                                        <div class="quantity-counter">
+                                            <button class="dec-btn">-</button>
+                                            <input type="text" class="form-control quantity-field" id="<?= $item['iid'] ?>" name="<?= $item['iid'] ?>">
+                                            <button class="inc-btn">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="counters.php" class="btn btn-sm btn-default">Add More</a>
+                        <a href="checkout.php" class="btn btn-sm btn-default">Checkout</a>
                     </div>
                 </div> 
             </div>

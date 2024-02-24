@@ -50,8 +50,23 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -84,13 +99,19 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Add Food Category</h1>
+                        <h1>Add Food Counter</h1>
                     </div>
                 </div>
                 <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
                         <?php
+                            function random_strings($length_of_string)
+                            {
+                              $str_result = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                              return substr(str_shuffle($str_result), 0, $length_of_string);
+                            }
+
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 $target_dir = "uploads/";
                                 $file_name = '';
@@ -104,15 +125,16 @@
 
                                 $image = $file_name;
                                 $category = $_POST['category'];
-                                $desc = $_POST['description'];
+                                $holder = $_POST['holder'];
+                                $usernm = $_POST['username'];
+                                $passwd = $_POST['password'];
 
-                                $add = "INSERT into food_category(category,description,image) values ('$category','$desc','$image')";
+                                $add = "INSERT into food_category(category,image,holder,username,passwd) values ('$category','$desc','$holder','$usernm','$passwd')";
                                 $retval = mysqli_query($db,$add);
                                 if($retval) {
                                 ?>
                                     <script>
-                                        alert("Category added successfully.");
-                                        window.location.href="food-category-list.php";
+                                        simpleModal("Counter added successfully.", "food-category-list.php");
                                     </script>
                                 <?php
                                 }
@@ -124,12 +146,20 @@
                                 <input type="file" class="form-control" id="image" name="image" required/>
                             </div>
                             <div class="form-group col-12">
-                                <label>Category</label>
-                                <input type="text" class="form-control"  id="category" name="category" required/>
+                                <label>Counter Name</label>
+                                <input type="text" class="form-control" id="category" name="category" required/>
                             </div>
                             <div class="form-group col-12">
-                                <label>Description</label>
-                                <textarea class="form-control" name="description" id="description" rows="2" maxlength="300" required></textarea>
+                                <label>Holder Name</label>
+                                <input type="text" class="form-control" id="holder" name="holder" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Username</label>
+                                <input type="text" class="form-control" id="username" name="username" value="<?= strtoupper(random_strings(9)) ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required/>
                             </div>
                             <div class="form-group col-12">
                                 <button type="submit" class="btn btn-default">Submit</button>

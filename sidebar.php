@@ -5,5 +5,5 @@
                 <a href="givefeed.php">Give Feedback</a>
                 <a href="viewfeed.php">View Feedback</a>
                 <a href="profile.php">Profile</a>
-                <a href="employee.php">Logout</a>
+                <a href="logout.php">Logout</a>
             </div>

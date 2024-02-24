@@ -84,7 +84,7 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Food Category List</h1>
+                        <h1>Food Counter List</h1>
                     </div>
                 </div>
                 <div class="row">
@@ -93,7 +93,9 @@
                         <table class="table items-list">
                             <tr>
                                 <th>Image</th>
-                                <th>Category</th>
+                                <th>Counter</th>
+                                <th>Holder</th>
+                                <th>Username</th>
                                 <th>Action</th>
                             </tr>
                             <?php 
@@ -105,6 +107,8 @@
                             <tr>
                                 <td><img src="uploads/<?= $item['image'] ?>"/></td>
                                 <td><?= $item['category'] ?></td>
+                                <td><?= $item['holder'] ?></td>
+                                <td><?= $item['username'] ?></td>
                                 <td>
                                     <a href="edit-food-category.php?catid=<?= $item['id'] ?>"><i class="ti-pencil"></i></a>
                                 </td>

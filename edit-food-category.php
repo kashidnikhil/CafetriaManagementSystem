@@ -51,8 +51,23 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -85,7 +100,7 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Add Food Category</h1>
+                        <h1>Edit Food Counter</h1>
                     </div>
                 </div>
                 <!-- END SECTION BREADCRUMB -->
@@ -109,15 +124,16 @@
 
                                 $image = $file_name;
                                 $category = $_POST['category'];
-                                $desc = $_POST['description'];
+                                $holder = $_POST['holder'];
+                                $usernm = $_POST['username'];
+                                $passwd = $_POST['password'];
 
-                                $edit = "UPDATE food_category SET category='$category', description='$desc', image='$image' WHERE id=$catId";
+                                $edit = "UPDATE food_category SET category='$category', image='$image', holder='$holder', username='$usernm', passwd='$passwd' WHERE id=$catId";
                                 $retval = mysqli_query($db,$edit);
                                 if($retval) {
                                 ?>
                                     <script>
-                                        alert("Category updated successfully.");
-                                        window.location.href="food-category-list.php";
+                                        simpleModal("Category updated successfully.", "food-category-list.php");
                                     </script>
                                 <?php
                                 }
@@ -130,12 +146,20 @@
                                 <input type="file" class="form-control" id="image" name="image"/>
                             </div>
                             <div class="form-group col-12">
-                                <label>Category</label>
+                                <label>Counter Name</label>
                                 <input type="text" class="form-control"  id="category" name="category" value="<?= $catDet['category'] ?>" required/>
                             </div>
                             <div class="form-group col-12">
-                                <label>Description</label>
-                                <textarea class="form-control" name="description" id="description" rows="2" maxlength="300"><?= $catDet['description'] ?></textarea>
+                                <label>Holder Name</label>
+                                <input type="text" class="form-control" id="holder" name="holder" value="<?= $catDet['holder'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Username</label>
+                                <input type="text" class="form-control" id="username" name="username" value="<?= $catDet['username'] ?>" required/>
+                            </div>
+                            <div class="form-group col-12">
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="password" name="password" value="<?= $catDet['passwd'] ?>" required/>
                             </div>
                             <div class="form-group col-12">
                                 <button type="submit" class="btn btn-default">Submit</button>

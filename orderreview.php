@@ -52,8 +52,23 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -120,8 +135,7 @@
                                 sendMail("cssonawane32@gmail.com", "Pannash Greens - Review For Order No-".$_GET['oid'], $mailBody);
                             ?>
                             <script>
-                                alert("Review submitted successfully.");
-                                window.location.href="stordview.php";
+                                simpleModal("Review submitted successfully.", "stordview.php");
                             </script>
                             <?php
                             }
