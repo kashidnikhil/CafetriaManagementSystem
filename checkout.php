@@ -129,7 +129,7 @@
                             </div>
                             <?php
                                 if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                                    $ala = "SELECT * from sjtalacarte";
+                                    $ala = "SELECT * FROM sjtalacarte";
                                     $res = mysqli_query($db,$ala);
                                     $x = 0;
 
@@ -163,15 +163,15 @@
                                         $note = $_POST['order_note'];
                                         $add = "INSERT INTO ord(cid,custid,odate,cost,note,status) VALUES ('919','$cust','$date','$cost','$note','Received')";
                                         $retval = mysqli_query($db,$add);
-                                        $m = mysqli_query($db,"select max(oid) from ord");
-                                        $max = mysqli_fetch_array($m,MYSQLI_ASSOC);
-                                        $oid = $max['max(oid)'];
+                                        $m = mysqli_query($db,"SELECT MAX(oid) as moid FROM ord");
+                                        $max = mysqli_fetch_array($m, MYSQLI_ASSOC);
+                                        $oid = $max['moid'];
                                         for($y=0;$y<$x;$y++){
-                                            $add = "INSERT INTO orderdet VALUES('$oid','$ord[$y]','$qty[$y]')";
+                                            $add = "INSERT INTO orderdet(oid,iid,qty) VALUES('$oid','".$ord[$y]."','".$qty[$y]."')";
                                             $retval = mysqli_query($db,$add);
                                         }
                                         $balance=$row['wallet']-$cost;
-                                        $add="update customer set wallet='$balance' where custid='$cust'";
+                                        $add="UPDATE customer SET wallet='$balance' WHERE custid='$cust'";
                                         $retval = mysqli_query($db,$add);
 
                                         $mailBody = "Order No.: $oid<br/>

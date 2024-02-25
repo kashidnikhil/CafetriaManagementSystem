@@ -121,6 +121,7 @@
                                 <th>Item Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Status</th>
                             </tr>
                             <?php 
                                 while($item = mysqli_fetch_array($r,MYSQLI_ASSOC)) {
@@ -134,6 +135,7 @@
                                 <td><?= $ala['name'] ?></td>
                                 <td><?= $item['qty'] ?></td>
                                 <td><?= $item['qty']*$ala['price'] ?></td>
+                                <td><?= $item['status'] ?></td>
                             </tr>
                             <?php } } ?>
                             <tr>

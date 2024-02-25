@@ -6,6 +6,7 @@
         $sql = "SELECT * from food_category where username='$uname'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $fcId = $row['id'];
     } else {
         $uname = $_SESSION['login_user'];
         $sql = "SELECT * from employee where eid='$uname'";
@@ -59,8 +60,23 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -124,6 +140,7 @@
                                 <th>Item Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Status</th>
                             </tr>
                             <?php 
                                 while($item = mysqli_fetch_array($r,MYSQLI_ASSOC)) {
@@ -143,11 +160,12 @@
                                 <td><?= $ala['name'] ?></td>
                                 <td><?= $item['qty'] ?></td>
                                 <td><?= $item['qty']*$ala['price'] ?></td>
+                                <td><?= $item['status'] ?></td>
                             </tr>
                             <?php } } ?>
                             <tr>
                                 <td colspan="2" class="text-right"><strong>Total</strong></td>
-                                <td><strong><?= $det['cost'] ?></strong></td>
+                                <td colspan="2"><strong><?= $det['cost'] ?></strong></td>
                             </tr>
                         </table>
                         <p><strong>Note:</strong> <?= $note ?></p>
@@ -158,13 +176,34 @@
 
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if($_POST['rating']==0){
-                                    $l = "UPDATE ord SET status='Processing' WHERE oid='$oid'"; //eid='$eid'
-                                    $ret = mysqli_query($db,$l);
-                                ?>
-                                    <script>
-                                        window.location.href = 'thermal-print.php';
-                                    </script>
-                                <?php
+                                    $oPen = 0;
+                                    $itemQue = "SELECT orderdet.iid, orderdet.status, fc.id FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE orderdet.oid='$oid'";
+                                    $itemRes = mysqli_query($db,$itemQue);
+
+                                    while($ordItem = mysqli_fetch_array($itemRes,MYSQLI_ASSOC)) {
+                                        if($ordItem['id']==$fcId) {
+                                            $itemUpQue = "UPDATE orderdet SET status='Accepted' WHERE oid='$oid' AND iid=".$ordItem['iid'];
+                                            $itemUpRes = mysqli_query($db,$itemQue);
+                                        } elseif($ordItem['status']!='Accepted') {
+                                            $oPen++;
+                                        }
+                                    }
+
+                                    if($oPen==0) {
+                                        $l = "UPDATE ord SET status='Completed' WHERE oid='$oid'"; //eid='$eid' //Processing
+                                        $ret = mysqli_query($db,$l);
+                                        ?>
+                                            <script>
+                                                window.location.href = 'thermal-print.php';
+                                            </script>
+                                        <?php
+                                    } else {
+                                        ?>
+                                            <script>
+                                                simpleModal("<?= $oPen ?> items pending from this order.", "thermal-print.php");
+                                            </script>
+                                        <?php
+                                    }
                                 } else {
                                     $l = "UPDATE ord SET status='Cancelled' WHERE oid='$oid'"; //, eid='$eid'
                                     $ret = mysqli_query($db,$l);
@@ -179,7 +218,7 @@
                                     //header('Location: emphome.php');
                                 ?>
                                     <script>
-                                        window.location.href = 'emphome.php';
+                                        window.location.href = "<?= isset($_SESSION['counter_user'])?'emordstat.php':'emphome.php' ?>";
                                     </script>
                                 <?php
                                 }
@@ -187,8 +226,8 @@
                         ?>
                         <form method="POST" action="<?php $_PHP_SELF ?>">
                             <label for="rating" class="mr-20"><strong>Your Choice</strong></label>
-                            <label class="mr-10"><input type="radio" name="rating" value=0> Accept</label>
-                            <label><input type="radio" name="rating" value=1> Decline</label><br/>
+                            <label class="mr-10"><input type="radio" name="rating" value="0"> Accept</label>
+                            <!-- <label><input type="radio" name="rating" value=1> Decline</label> --><br/>
                             <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Submit</button>
                         </form>
                     </div>

@@ -111,6 +111,7 @@
                                         <div class="title">
                                             <h5><a href="#"><?= $item['name'] ?></a></h5>
                                         </div>
+                                        <p><?= $item['description'] ?></p>
                                         <!-- <p>Lorem Ipsum is simply dummy text of the printing and industry.</p> -->
                                     </div>
                                     <div class="menu_footer">

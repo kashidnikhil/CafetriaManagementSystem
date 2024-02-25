@@ -7244,7 +7244,9 @@ label.mr-20 {
 img.size-80 {
 	width: 80px;
 }
-
+img.max-90 {
+	max-width: 90%;
+}
 
 
 @media (max-width: 991px) {

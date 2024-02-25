@@ -122,6 +122,7 @@
                                 <th>Item Name</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
+                                <th>Status</th>
                             </tr>
                             <?php 
                                 while($item = mysqli_fetch_array($r,MYSQLI_ASSOC)) {
@@ -135,6 +136,7 @@
                                 <td><?= $ala['name'] ?></td>
                                 <td><?= $item['qty'] ?></td>
                                 <td><?= $item['qty']*$ala['price'] ?></td>
+                                <td><?= $item['status'] ?></td>
                             </tr>
                             <?php } } ?>
                             <tr>
@@ -151,7 +153,7 @@
                                     //header('Location: emphome.php');
                                 ?>
                                     <script>
-                                        window.location.href = 'emphome.php';
+                                        window.location.href = "<?= isset($_SESSION['counter_user'])?'emordstat.php':'emphome.php' ?>";
                                     </script>
                                 <?php
                                 }

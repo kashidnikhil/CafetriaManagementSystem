@@ -35,10 +35,36 @@
                     </a>
                     <?php
                     }
-                ?>
-                
+                ?>                
+            </div>
+            <div class="cart-count">            
+                <a class="nav-link" href="emordstat.php">
+                    <i id="order-bell" class="ti-bell"></i>
+                </a>
             </div>
         </nav>
     </div>
+    <audio id="bell-sound">
+      <source src="assets/ring.mp3">
+    </audio>
 </header>
 <!-- END HEADER -->
+<script>
+    const getOrderData = () => {
+        fetch("getOrderData.php")
+        .then(result => result.json())
+        .then(data => {
+            if(localStorage.getItem("orders") === null) {
+                localStorage.setItem("orders", JSON.stringify(data));
+            } else if(localStorage.getItem("orders") !== JSON.stringify(data)) {
+                localStorage.setItem("orders", JSON.stringify(data));
+                document.getElementById("order-bell").style.color = "#FF0000";
+                document.querySelector("#bell-sound").play();
+            }
+        });
+    }
+
+    getOrderData();
+
+    setInterval(getOrderData, 5000);
+</script>

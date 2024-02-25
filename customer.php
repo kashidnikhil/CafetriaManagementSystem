@@ -58,6 +58,8 @@
             }
         });
     }
+
+    localStorage.removeItem("orders");
 </script>
 </head>
 
@@ -74,8 +76,14 @@
         $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
         $myusername = mysqli_real_escape_string($db,$_POST['uname']);
-        $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
+        $mypassword = mysqli_real_escape_string($db,$_POST['pwd']);
+        $recaptcha = $_POST['g-recaptcha-response'];
+        $secret_key = '6LcYT38pAAAAAAbSq82kpSMIZybQzIAxMbKklOiS';
 
+        $url = 'https://www.google.com/recaptcha/api/siteverify?secret='.$secret_key.'&response='.$recaptcha; 
+        $response = file_get_contents($url);
+        $response = json_decode($response);
+        
         $sql = "SELECT eid FROM eauth WHERE eid='$myusername' AND pwd='$mypassword'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
@@ -83,20 +91,35 @@
 
         // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
-            $_SESSION['login_user'] = $myusername;
-            $_SESSION['cust_user'] = $myusername;
-            header("location: emphome.php");
-        }
-        else {
+            if(true) { //$response->success == true
+                $_SESSION['login_user'] = $myusername;
+                $_SESSION['cust_user'] = $myusername;
+                header("location: emphome.php");
+            } else {
+            ?>
+                <script>
+                    simpleModal("Error in Google reCAPTACHA");
+                </script>
+            <?php
+            }
+        } else {
             $sql1 = "SELECT id FROM food_category WHERE username='$myusername' AND passwd='$mypassword'";
             $result1 = mysqli_query($db,$sql1);
             $row1 = mysqli_fetch_array($result1,MYSQLI_ASSOC);
             $count1 = mysqli_num_rows($result1);
 
             if($count1) {
-                $_SESSION['login_user'] = $myusername;
-                $_SESSION['counter_user'] = $myusername;
-                header("location: emordstat.php");
+                if(true) { //$response->success == true
+                    $_SESSION['login_user'] = $myusername;
+                    $_SESSION['counter_user'] = $myusername;
+                    header("location: emordstat.php");
+                } else {
+                ?>
+                    <script>
+                        simpleModal("Error in Google reCAPTACHA");
+                    </script>
+                <?php
+                }
             } else {
             ?>
                 <script>
@@ -151,6 +174,9 @@
                         </div>
                         <div class="form-group">
                             <input class="form-control" type="password" id="pwd" name="pwd" Placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="g-recaptcha" data-sitekey="6LcYT38pAAAAAL0oilGkZ2IwmkBUVnsh8vdnuzVa"></div> 
                         </div>
                         <!-- <div class="login_footer form-group">
                           <a href="#">Forgot password?</a>
@@ -208,6 +234,8 @@
 <script src="assets/js/mdtimepicker.min.js"></script>
 <!-- scripts js --> 
 <script src="assets/js/scripts.js"></script>
+<!-- Google recaptcha -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
 </html>

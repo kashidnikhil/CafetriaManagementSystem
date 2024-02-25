@@ -1,17 +1,10 @@
 <?php 
     include('sessionemp.php');
 
-    if(isset($_SESSION['counter_user'])) {
-        $uname = $_SESSION['counter_user'];
-        $sql = "SELECT * from food_category where username='$uname'";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    } else {
-        $uname = $_SESSION['login_user'];
-        $sql = "SELECT * from employee where eid='$uname'";
-        $result = mysqli_query($db,$sql);
-        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    }
+    $uname = $_SESSION['login_user'];
+    $sql = "SELECT * from employee where eid='$uname'";
+    $result = mysqli_query($db,$sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -91,71 +84,27 @@
                 <!-- START SECTION BREADCRUMB -->
                 <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
-                        <h1>Best Employee</h1>
-                    </div>
-                </div>
-                <!-- END SECTION BREADCRUMB -->
-                <div class="row align-items-center">
-                    <div class="col-md-12 best-employee">
-                        <?php 
-                            $q = "select max(jo) from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t";
-                            $m = mysqli_query($db,$q);
-                            $cost = mysqli_fetch_array($m, MYSQLI_ASSOC);
-                            $qb = "select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid";
-                            $mb = mysqli_query($db,$qb);
-                            while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                                if ($cost['max(jo)']==$item['jo']){
-                                    $eid = $item['eid'];
-                                    $name = "select * from employee where eid='$eid'";
-                                    $r = mysqli_query($db,$name);
-                                    $nm = mysqli_fetch_array($r,MYSQLI_ASSOC);
-                                    $cid = $nm['cid'];
-                                    $c = "select name from canteen where cid=".$cid."";
-                                    $s = mysqli_query($db,$c);
-                                    $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
-
-                                ?>
-                                <div><label>Name of employee:</label> <?= $nm['name'] ?></div>
-                                <div><label>Canteen:</label> <?= $cant['name'] ?></div>
-                                <div><label>Average sale:</label> <?= round($cost['max(jo)']) ?></div>
-                                <?php
-                                }
-                            }
-                        ?>
-                    </div>
-                </div><br/><br/>
-                <!-- START SECTION BREADCRUMB -->
-                <div class="breadcrumb_section background_bg page_title_light">
-                    <div class="page-title">
-                        <h2>Leaderboard</h2>
+                        <h1>Leaderboard</h1>
                     </div>
                 </div>
                 <!-- END SECTION BREADCRUMB -->
                 <div class="row">
                     <div class="col-12">
-                        <table class="table">
+                        <table class="table items-list">
                             <tr>
-                                <th>Name of Employee</th>
-                                <th>Canteen</th>
-                                <th>Average Sale</th>
+                                <th>Item</th>
+                                <th>Counter</th>
+                                <th>Total Sale</th>
                             </tr>
                             <?php 
-                                $qb = "select * from (select eid, sum(cost)/count(eid) as jo from ord where status = 'Completed' group by eid) as t order by jo desc";
+                                $qb = "SELECT sjt.name, sjt.image, fc.category, SUM(orderdet.qty) as sale FROM orderdet LEFT JOIN sjtalacarte as sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category as fc ON fc.id=sjt.category GROUP BY sjt.iid";
                                 $mb = mysqli_query($db,$qb);
-                                while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){
-                                    $eid = $item['eid'];
-                                    $name = "select * from employee where eid='$eid'";
-                                    $r = mysqli_query($db,$name);
-                                    $nm = mysqli_fetch_array($r,MYSQLI_ASSOC);
-                                    $cid = $nm['cid'];
-                                    $c = "select name from canteen where cid=".$cid."";
-                                    $s = mysqli_query($db,$c);
-                                    $cant = mysqli_fetch_array($s, MYSQLI_ASSOC);
+                                while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)) {
                             ?>
                             <tr>
-                                <td><?= $nm['name'] ?></td>
-                                <td><?= $cant['name'] ?></td>
-                                <td><?= round($item['jo']) ?></td>
+                                <td><img src="uploads/<?= $item['image'] ?>"/> <?= $item['name'] ?></td>
+                                <td><?= $item['category'] ?></td>
+                                <td><?= $item['sale'] ?></td>
                             </tr>
                             <?php } ?>
                         </table>

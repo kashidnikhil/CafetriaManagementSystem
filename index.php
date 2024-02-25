@@ -49,7 +49,7 @@
           </div>
         
           <div class="column2">
-              <img id="one" src="images/undraw.png" /> 
+              <img id="one" src="images/home-img.jpeg" /> 
           </div>
         </div>     
 

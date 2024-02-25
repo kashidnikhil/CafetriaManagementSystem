@@ -113,9 +113,9 @@
                                     }
                                     $oid .= ")";
 
-                                    $al = "SELECT * FROM ord WHERE cid='919' AND oid IN $oid AND status IN ('Cancelled','Completed')";
+                                    $al = "SELECT * FROM ord WHERE cid='919' AND oid IN $oid AND status IN ('Cancelled','Completed') ORDER BY oid DESC";
                                 } else {
-                                    $al = "SELECT * FROM ord WHERE cid='919' AND status IN ('Cancelled','Completed'))";
+                                    $al = "SELECT * FROM ord WHERE cid='919' AND status IN ('Cancelled','Completed') ORDER BY oid DESC";
                                 }
                                 $res = mysqli_query($db,$al);
                                 while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)) {                               

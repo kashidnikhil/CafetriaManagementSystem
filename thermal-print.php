@@ -106,7 +106,7 @@
                 window.print();
 
                 setTimeout(() => { 
-                    window.location.href = "emphome.php" 
+                    window.location.href = "<?= isset($_SESSION['counter_user'])?'emordstat.php':'emphome.php' ?>"; 
                 }, 2000);
             }, 600);
             // const $btnPrint = document.querySelector("#btnPrint");

@@ -82,16 +82,17 @@
 
             <div class="col-lg-9 col-sm-12 col-12">
                 <!-- START SECTION BREADCRUMB -->
-                <div class="breadcrumb_section background_bg page_title_light">
+                <!-- <div class="breadcrumb_section background_bg page_title_light">
                     <div class="page-title">
                         <h1>Dashboard</h1>
                     </div>
-                </div>
+                </div> -->
                 <!-- END SECTION BREADCRUMB -->
                 <div class="row">
-                    <div class="col-12">
-                        <h3>Are you confused, what to order?</h3>
-                        <a href="counters.php" class="btn btn-default">Click Here</a>
+                    <div class="col-12 text-center">
+                        <img class="max-90" src="images/whattoorder.jpeg"><br/><br/>
+                        <!-- <h3>Are you confused, what to order?</h3> -->
+                        <a href="counters.php" class="btn btn-default">Order Now</a>
                     </div>
                 </div> 
             </div>
