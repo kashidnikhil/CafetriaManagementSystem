@@ -1,12 +1,19 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $eid = $row['eid'];
+    }
     $oid = $_GET['oid'];
-    $eid = $row['eid'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -92,10 +99,22 @@
                 <div class="row">
                     <div class="col-12">
                         <?php
-                            $c = "select * from ord where oid='$oid'";
+                            $c = "SELECT * FROM ord WHERE oid='$oid'";
                             $res = mysqli_query($db,$c);
                             $det = mysqli_fetch_array($res,MYSQLI_ASSOC);
-                            $q = "SELECT * from orderdet where oid='$oid'";
+                            if(isset($_SESSION['counter_user'])) {
+                                $qb = "SELECT orderdet.iid as iid FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE fc.username='$uname' AND orderdet.oid='$oid'";
+                                $qbres = mysqli_query($db,$qb);
+                                $iidList = "(";
+                                while($fc = mysqli_fetch_array($qbres, MYSQLI_ASSOC)) {
+                                    $iidList .= $iidList=="("?$fc['iid']:",".$fc['iid'];
+                                }
+                                $iidList .= ")";
+
+                                $q = "SELECT * FROM orderdet WHERE iid IN $iidList AND oid='$oid'";
+                            } else {
+                                $q = "SELECT * FROM orderdet WHERE oid='$oid'";
+                            }
                             $r = mysqli_query($db,$q);
                             $printData = [];
                             $note = $det['note'];
@@ -139,7 +158,7 @@
 
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if($_POST['rating']==0){
-                                    $l = "update ord set status='Processing', eid='$eid' where oid='$oid'";
+                                    $l = "UPDATE ord SET status='Processing' WHERE oid='$oid'"; //eid='$eid'
                                     $ret = mysqli_query($db,$l);
                                 ?>
                                     <script>
@@ -147,15 +166,15 @@
                                     </script>
                                 <?php
                                 } else {
-                                    $l = "update ord set status='Cancelled', eid='$eid' where oid='$oid'";
+                                    $l = "UPDATE ord SET status='Cancelled' WHERE oid='$oid'"; //, eid='$eid'
                                     $ret = mysqli_query($db,$l);
                                     $custid = $det['custid'];
-                                    $cm = "select * from customer where custid='$custid'";
+                                    $cm = "SELECT * FROM customer WHERE custid='$custid'";
                                     $mn = mysqli_query($db,$cm);
                                     $im = mysqli_fetch_array($mn,MYSQLI_ASSOC);
                                     $wallet = $im['wallet'];
                                     $wallet += $det['cost'];
-                                    $fin = "update customer set wallet='$wallet' where custid='$custid'";
+                                    $fin = "UPDATE customer SET wallet='$wallet' WHERE custid='$custid'";
                                     $qr = mysqli_query($db,$fin);
                                     //header('Location: emphome.php');
                                 ?>

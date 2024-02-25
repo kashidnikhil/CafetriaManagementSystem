@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">

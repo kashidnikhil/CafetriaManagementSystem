@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,7 +96,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <a href="food-category.php" class="btn btn-sm btn-default">Add Category</a><br/><br/>
+                        <a href="food-category.php" class="btn btn-sm btn-default">Add Counter</a><br/><br/>
                         <table class="table items-list">
                             <tr>
                                 <th>Image</th>

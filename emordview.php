@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,8 +103,20 @@
                                 <th>Price (Rs.)</th>
                                 <th>Status</th>
                             </tr>
-                            <?php 
-                                $al = "select * from ord where cid='$cid' and status IN ('Cancelled','Completed')";
+                            <?php
+                                if(isset($_SESSION['counter_user'])) {
+                                    $qb = "SELECT DISTINCT(orderdet.oid) as oid FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE fc.username='$uname'";
+                                    $qbres = mysqli_query($db,$qb);
+                                    $oid = "(";
+                                    while($fc = mysqli_fetch_array($qbres, MYSQLI_ASSOC)) {
+                                        $oid .= $oid=="("?$fc['oid']:",".$fc['oid'];
+                                    }
+                                    $oid .= ")";
+
+                                    $al = "SELECT * FROM ord WHERE cid='919' AND oid IN $oid AND status IN ('Cancelled','Completed')";
+                                } else {
+                                    $al = "SELECT * FROM ord WHERE cid='919' AND status IN ('Cancelled','Completed'))";
+                                }
                                 $res = mysqli_query($db,$al);
                                 while($item = mysqli_fetch_array($res, MYSQLI_ASSOC)) {                               
                             ?>

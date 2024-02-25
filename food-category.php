@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,7 +136,7 @@
                                 $usernm = $_POST['username'];
                                 $passwd = $_POST['password'];
 
-                                $add = "INSERT into food_category(category,image,holder,username,passwd) values ('$category','$desc','$holder','$usernm','$passwd')";
+                                $add = "INSERT into food_category(category,image,holder,username,passwd) values ('$category','$image','$holder','$usernm','$passwd')";
                                 $retval = mysqli_query($db,$add);
                                 if($retval) {
                                 ?>

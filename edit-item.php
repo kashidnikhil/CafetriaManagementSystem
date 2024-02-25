@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
     $iid = $_GET['iid'];
 ?>
 <!DOCTYPE html>
@@ -107,10 +114,14 @@
                 <div class="row">
                     <div class="col-12">
                         <?php
-                            $catQuery = "select * from food_category";
+                            if(isset($_SESSION['counter_user'])) {
+                                $catQuery = "SELECT * FROM food_category WHERE username='$uname'";
+                            } else {
+                                $catQuery = "SELECT * FROM food_category";
+                            }
                             $catMQ = mysqli_query($db,$catQuery);
 
-                            $itQue = "select * from sjtalacarte where iid=$iid";
+                            $itQue = "SELECT * FROM sjtalacarte WHERE iid=$iid";
                             $itMQ = mysqli_query($db,$itQue);
                             $itemDet = mysqli_fetch_array($itMQ, MYSQLI_ASSOC);
                             $file_name = $itemDet['image'];

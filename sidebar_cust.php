@@ -1,3 +1,12 @@
+            <?php if(isset($_SESSION['counter_user'])) { ?>
+            <div class="col-lg-3" id="sidebar-menu">
+                <a href="items-list.php">View Items</a>
+                <a href="emordstat.php">Pending Orders</a>
+                <a href="emordview.php">Completed Orders</a>
+                <a href="empprof.php">Profile</a>
+                <a href="logout.php">Logout</a>
+            </div>
+            <?php } else { ?>
             <div class="col-lg-3" id="sidebar-menu">
                 <a href="emphome.php">Dashboard</a>
                 <a href="items-list.php">View Items</a>
@@ -7,3 +16,4 @@
                 <a href="empprof.php">Profile</a>
                 <a href="logout.php">Logout</a>
             </div>
+            <?php } ?>

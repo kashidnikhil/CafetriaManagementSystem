@@ -76,10 +76,9 @@
         $myusername = mysqli_real_escape_string($db,$_POST['uname']);
         $mypassword = mysqli_real_escape_string($db,$_POST['pwd']); 
 
-        $sql = "SELECT eid FROM eauth WHERE eid='$myusername' and pwd='$mypassword'";
+        $sql = "SELECT eid FROM eauth WHERE eid='$myusername' AND pwd='$mypassword'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-        $error="Enter details.";
         $count = mysqli_num_rows($result);
 
         // If result matched $myusername and $mypassword, table row must be 1 row
@@ -89,11 +88,22 @@
             header("location: emphome.php");
         }
         else {
+            $sql1 = "SELECT id FROM food_category WHERE username='$myusername' AND passwd='$mypassword'";
+            $result1 = mysqli_query($db,$sql1);
+            $row1 = mysqli_fetch_array($result1,MYSQLI_ASSOC);
+            $count1 = mysqli_num_rows($result1);
+
+            if($count1) {
+                $_SESSION['login_user'] = $myusername;
+                $_SESSION['counter_user'] = $myusername;
+                header("location: emordstat.php");
+            } else {
             ?>
-            <script>
-                simpleModal("Enter correct details.");
-            </script>
+                <script>
+                    simpleModal("Enter correct details.");
+                </script>
             <?php
+            }
         }
     }
 ?>

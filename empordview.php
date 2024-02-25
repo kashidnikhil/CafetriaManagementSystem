@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
     $oid = $_GET['oid'];
 ?>
 <!DOCTYPE html>
@@ -91,10 +98,22 @@
                 <div class="row">
                     <div class="col-12">
                         <?php
-                            $c = "select * from ord where oid='$oid'";
+                            $c = "SELECT * FROM ord WHERE oid='$oid'";
                             $res = mysqli_query($db,$c);
                             $det = mysqli_fetch_array($res,MYSQLI_ASSOC);
-                            $q = "SELECT * from orderdet where oid='$oid'";
+                            if(isset($_SESSION['counter_user'])) {
+                                $qb = "SELECT orderdet.iid as iid FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE fc.username='$uname' AND orderdet.oid='$oid'";
+                                $qbres = mysqli_query($db,$qb);
+                                $oidList = "(";
+                                while($fc = mysqli_fetch_array($qbres, MYSQLI_ASSOC)) {
+                                    $oidList .= $oidList=="("?$fc['iid']:",".$fc['iid'];
+                                }
+                                $oidList .= ")";
+
+                                $q = "SELECT * FROM orderdet WHERE iid IN $oidList AND oid='$oid'";
+                            } else {
+                                $q = "SELECT * FROM orderdet WHERE oid='$oid'";
+                            }
                             $r = mysqli_query($db,$q);
                         ?>
                         <table class="table">

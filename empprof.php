@@ -1,10 +1,18 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $eid = $row['eid'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,30 +117,53 @@
                         <h3>Change Password</h3>
                         <br/>
                         <?php
-                            $eid = $row['eid'];
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                                $custid = $row['eid'];
-                                $q="select pwd from sauth where eid='$eid'";
+                                if(isset($_SESSION['counter_user'])) {
+                                    $q="SELECT passwd FROM food_category WHERE username='$uname'";
+                                } else {
+                                    $custid = $row['eid'];
+                                    $q="SELECT pwd FROM sauth WHERE eid='$eid'";
+                                }
                                 $res = mysqli_query($db,$q);
                                 $item = mysqli_fetch_array($res,MYSQLI_ASSOC);
 
                                 $o = $_POST['oldpwd'];
                                 $n = $_POST['newpwd'];
-                                if(strcmp($o,$item['pwd'])==0){
-                                    $add = "update eauth set pwd='$n' where eid='$eid'";
-                                    $retval = mysqli_query($db,$add);
-                                ?>
-                                <script>
-                                    simpleModal("Password updated successfully.", "emphome.php");
-                                </script>
-                                <?php
-                                }
-                                else{
-                                ?>
-                                <script>
-                                    simpleModal("Enter Correct Password.");
-                                </script>
-                                <?php
+
+                                if(isset($_SESSION['counter_user'])) {
+                                    if(strcmp($o,$item['passwd'])==0){
+                                        $add = "UPDATE food_category SET passwd='$n' WHERE username='$uname'";
+                                        $retval = mysqli_query($db,$add);
+                                    ?>
+                                    <script>
+                                        simpleModal("Password updated successfully.", "emphome.php");
+                                    </script>
+                                    <?php
+                                    }
+                                    else{
+                                    ?>
+                                    <script>
+                                        simpleModal("Enter Correct Password.");
+                                    </script>
+                                    <?php
+                                    }
+                                } else {
+                                    if(strcmp($o,$item['pwd'])==0){
+                                        $add = "UPDATE eauth SET pwd='$n' WHERE eid='$eid'";
+                                        $retval = mysqli_query($db,$add);
+                                    ?>
+                                    <script>
+                                        simpleModal("Password updated successfully.", "emphome.php");
+                                    </script>
+                                    <?php
+                                    }
+                                    else{
+                                    ?>
+                                    <script>
+                                        simpleModal("Enter Correct Password.");
+                                    </script>
+                                    <?php
+                                    }
                                 }
                             }
                         ?>

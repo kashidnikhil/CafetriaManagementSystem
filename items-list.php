@@ -1,10 +1,17 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -120,7 +127,11 @@
                                 <th>Action</th>
                             </tr>
                             <?php 
-                                $qb = "SELECT sjt.*, fc.category AS category FROM sjtalacarte AS sjt LEFT JOIN food_category AS fc ON fc.id=sjt.category";
+                                if(isset($_SESSION['counter_user'])) {
+                                    $qb = "SELECT sjt.*, fc.category AS category FROM sjtalacarte AS sjt LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE fc.username='$uname'";
+                                } else {
+                                    $qb = "SELECT sjt.*, fc.category AS category FROM sjtalacarte AS sjt LEFT JOIN food_category AS fc ON fc.id=sjt.category";
+                                }
                                 $mb = mysqli_query($db,$qb);
 
                                 while($item = mysqli_fetch_array($mb, MYSQLI_ASSOC)){

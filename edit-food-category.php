@@ -1,11 +1,18 @@
 <?php 
     include('sessionemp.php');
 
-    $uname = $_SESSION['login_user'];
-    $sql = "SELECT * from employee where eid='$uname'";
-    $result = mysqli_query($db,$sql);
-    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
-    $catId = $_GET['catid'];
+    if(isset($_SESSION['counter_user'])) {
+        $uname = $_SESSION['counter_user'];
+        $sql = "SELECT * from food_category where username='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    } else {
+        $uname = $_SESSION['login_user'];
+        $sql = "SELECT * from employee where eid='$uname'";
+        $result = mysqli_query($db,$sql);
+        $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $catId = $_GET['catid'];
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -107,7 +114,7 @@
                 <div class="row">
                     <div class="col-12">
                         <?php
-                            $catQue = "select * from food_category where id=$catId";
+                            $catQue = "SELECT * FROM food_category WHERE id=$catId";
                             $catMQ = mysqli_query($db,$catQue);
                             $catDet = mysqli_fetch_array($catMQ, MYSQLI_ASSOC);
                             $file_name = $catDet['image'];
