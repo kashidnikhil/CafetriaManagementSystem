@@ -89,7 +89,7 @@
 
         // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
-            if(true) { //$response->success == true
+            if($response->success == true) { //$response->success == true
                 $_SESSION['login_user'] = $myusername;
                 $_SESSION['emp_user'] = $myusername;
                 header("location: homepage.php");

@@ -91,7 +91,7 @@
 
         // If result matched $myusername and $mypassword, table row must be 1 row
         if($count == 1) {
-            if(true) { //$response->success == true
+            if($response->success == true) { //$response->success == true
                 $_SESSION['login_user'] = $myusername;
                 $_SESSION['cust_user'] = $myusername;
                 header("location: emphome.php");
@@ -109,7 +109,7 @@
             $count1 = mysqli_num_rows($result1);
 
             if($count1) {
-                if(true) { //$response->success == true
+                if($response->success == true) { //$response->success == true
                     $_SESSION['login_user'] = $myusername;
                     $_SESSION['counter_user'] = $myusername;
                     header("location: emordstat.php");
