@@ -13,6 +13,7 @@
                             <ul class="list_none footer_link text-center text-md-right">                                
                                 <li><a href="<?= isset($_SESSION['cust_user'])?'emphome.php':'homepage.php' ?>">Home</a></li>
                                 <li><a href="terms-conditions.php">Terms &amp; Conditions</a></li>
+								<li><a href="refund-policy.php">Refund Policy</a></li>
                             </ul>
                         </div>
                         <?php } ?>
