@@ -1,3 +1,11 @@
+<?php 
+    include('sessioncust.php');
+
+    $uname = $_SESSION['login_user'];
+    $sql = "SELECT * from customer where custid='$uname'";
+    $result = mysqli_query($db,$sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,24 +71,14 @@
 </div>
 <!-- END LOADER -->  
 
-<!-- START HEADER -->
-<header class="header_wrap header_with_topbar dark_skin main_menu_uppercase"><!--fixed-top-->
-    <div class="container">
-        <nav class="navbar navbar-expand-lg"> 
-            <a class="navbar-brand" href="index.html">
-                <img class="logo_light" src="assets/images/logo_light.png" alt="logo">
-                <img class="logo_dark" src="assets/images/logo_dark.png" alt="logo">
-            </a>
-        </nav>
-    </div>
-</header>
-<!-- END HEADER -->
+<?php include('header.php'); ?>
 
 <!-- START SECTION LOGIN -->
-<div class="section">
+<div class="section pb_70">
 	<div class="container">
     	<div class="row">
-            <div class="col-12">
+            <?php include('sidebar.php'); ?>
+            <div class="col-lg-9 col-sm-12 col-12">
                 <h1>Refund Policy</h1>
                 <p> Note: Order amount will be refund in 3-4 business days.
 				<Br>
