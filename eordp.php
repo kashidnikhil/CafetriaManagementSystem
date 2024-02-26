@@ -6,6 +6,7 @@
         $sql = "SELECT * from food_category where username='$uname'";
         $result = mysqli_query($db,$sql);
         $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+        $fcId = $row['id'];
     } else {
         $uname = $_SESSION['login_user'];
         $sql = "SELECT * from employee where eid='$uname'";
@@ -59,8 +60,23 @@
 <!-- Style CSS -->
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
+<link rel="stylesheet" href="assets/sweetalert/sweetalert2.min.css">
 <link id="layoutstyle" rel="stylesheet" href="assets/color/theme-green.css">
 
+<!--Sweet alert script-->
+<script src="assets/sweetalert/sweetalert2.min.js"></script>
+
+<script>
+    const simpleModal = (message, redirect='') => {
+        Swal.fire({
+            text: message,
+        }).then(() => {
+            if(redirect != '') {
+                window.location.href = redirect;
+            }
+        });
+    }
+</script>
 </head>
 
 <body>
@@ -147,22 +163,46 @@
                         <p><strong>Note:</strong> <?= $det['note'] ?></p>
                         <?php
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                                if($_POST['rating']==0){
-                                    $l = "UPDATE ord SET status='Completed' WHERE oid='$oid'"; //eid='$eid'
-                                    $ret = mysqli_query($db,$l);
-                                    //header('Location: emphome.php');
-                                ?>
-                                    <script>
-                                        window.location.href = "<?= isset($_SESSION['counter_user'])?'emordstat.php':'emphome.php' ?>";
-                                    </script>
-                                <?php
+                                if(isset($_POST['rating']) && $_POST['rating']=="1"){
+                                    $oPen = 0; $iidStr = "";
+                                    $itemQue = "SELECT orderdet.iid, orderdet.status, fc.id FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE orderdet.oid='$oid'";
+                                    $itemRes = mysqli_query($db,$itemQue);
+
+                                    while($ordItem = mysqli_fetch_array($itemRes,MYSQLI_ASSOC)) {
+                                        if($ordItem['id']==$fcId) {
+                                            $iidStr .= $iidStr==""?$ordItem['iid']:",".$ordItem['iid'];
+                                        } elseif($ordItem['status']!='Ready') {
+                                            $oPen++;
+                                        }
+                                    }
+
+                                    if($iidStr!="") {
+                                        $itemUpQue = "UPDATE orderdet SET `status`='Ready' WHERE `oid`=$oid AND `iid` IN ($iidStr)";
+                                        $itemUpRes = mysqli_query($db,$itemUpQue);
+                                    }
+
+                                    if($oPen==0) {
+                                        $l = "UPDATE ord SET status='Completed' WHERE oid='$oid'"; //eid='$eid' //Processing
+                                        $ret = mysqli_query($db,$l);
+                                        ?>
+                                            <script>
+                                                window.location.href = "emordstat.php";
+                                            </script>
+                                        <?php
+                                    } else {
+                                        ?>
+                                            <script>
+                                                simpleModal("<?= $oPen ?> items processing from this order.", "emordstat.php");
+                                            </script>
+                                        <?php
+                                    }
                                 }
                             }
                         ?>
                         <form method="POST" action="<?php $_PHP_SELF ?>">
-                            <label for="rating" class="mr-20"><strong>Status</strong></label>
-                            <label><input type="radio" name="rating" value=0> Finished</label><br/>
-                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Submit</button>
+                            <!-- <label for="rating" class="mr-20"><strong>Status</strong></label> -->
+                            <label><input type="hidden" name="rating" value="1"> <!-- Finished --></label><br/>
+                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Complete</button>
                         </form>
                     </div>
                 </div> 

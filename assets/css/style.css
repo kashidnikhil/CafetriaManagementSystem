@@ -7249,6 +7249,23 @@ img.max-90 {
 }
 
 
+i#order-bell {
+	padding: 6px;
+	border-radius: 50%;
+}
+i#order-bell.blink-anim {
+	animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+  	color: #ffffff;
+    background-color: #ff0000;
+  }
+}
+
+
+
 @media (max-width: 991px) {
 	.header_wrap:not([class*="bg_"]):not([class*="bg-"]) {
 		position: relative;

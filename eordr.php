@@ -175,22 +175,26 @@
                             $_SESSION['order_note'] = $note;
 
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
-                                if($_POST['rating']==0){
-                                    $oPen = 0;
+                                if(isset($_POST['rating']) && $_POST['rating']=="1"){
+                                    $oPen = 0; $iidStr = "";
                                     $itemQue = "SELECT orderdet.iid, orderdet.status, fc.id FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE orderdet.oid='$oid'";
                                     $itemRes = mysqli_query($db,$itemQue);
 
                                     while($ordItem = mysqli_fetch_array($itemRes,MYSQLI_ASSOC)) {
                                         if($ordItem['id']==$fcId) {
-                                            $itemUpQue = "UPDATE orderdet SET status='Accepted' WHERE oid='$oid' AND iid=".$ordItem['iid'];
-                                            $itemUpRes = mysqli_query($db,$itemQue);
+                                            $iidStr .= $iidStr==""?$ordItem['iid']:",".$ordItem['iid'];
                                         } elseif($ordItem['status']!='Accepted') {
                                             $oPen++;
                                         }
                                     }
 
+                                    if($iidStr!="") {
+                                        $itemUpQue = "UPDATE orderdet SET `status`='Accepted' WHERE `oid`=$oid AND `iid` IN ($iidStr)";
+                                        $itemUpRes = mysqli_query($db,$itemUpQue);
+                                    }
+
                                     if($oPen==0) {
-                                        $l = "UPDATE ord SET status='Completed' WHERE oid='$oid'"; //eid='$eid' //Processing
+                                        $l = "UPDATE ord SET `status`='Processing' WHERE `oid`=$oid"; //eid='$eid' //Processing
                                         $ret = mysqli_query($db,$l);
                                         ?>
                                             <script>
@@ -204,7 +208,7 @@
                                             </script>
                                         <?php
                                     }
-                                } else {
+                                } /*else {
                                     $l = "UPDATE ord SET status='Cancelled' WHERE oid='$oid'"; //, eid='$eid'
                                     $ret = mysqli_query($db,$l);
                                     $custid = $det['custid'];
@@ -218,17 +222,17 @@
                                     //header('Location: emphome.php');
                                 ?>
                                     <script>
-                                        window.location.href = "<?= isset($_SESSION['counter_user'])?'emordstat.php':'emphome.php' ?>";
+                                        window.location.href = "emordstat.php";
                                     </script>
                                 <?php
-                                }
+                                }*/
                             }
                         ?>
                         <form method="POST" action="<?php $_PHP_SELF ?>">
-                            <label for="rating" class="mr-20"><strong>Your Choice</strong></label>
-                            <label class="mr-10"><input type="radio" name="rating" value="0"> Accept</label>
+                            <!-- <label for="rating" class="mr-20"><strong>Your Choice</strong></label> -->
+                            <label class="mr-10"><input type="hidden" name="rating" value="1" required> <!-- Accept --></label>
                             <!-- <label><input type="radio" name="rating" value=1> Decline</label> --><br/>
-                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Submit</button>
+                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Accept</button>
                         </form>
                     </div>
                 </div> 

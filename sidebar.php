@@ -1,4 +1,5 @@
             <div class="col-lg-3" id="sidebar-menu">
+                <a href="counters.php">Order Now</a>
                 <a href="homepage.php">Dashboard</a>
                 <a href="stordstat.php">Today's Orders</a>
                 <a href="stordview.php">Order History</a>

@@ -117,8 +117,7 @@
                                 <td><?= date('d M Y', strtotime($item['odate'])) ?></td>
                                 <td><?= $item['cost'] ?></td>
                                 <!-- <td><?php /*echo $name['name']*/ ?></td> -->
-                                <td><a href="stord.php?oid=<?= $item['oid'] ?>" class="<?= strtolower($item['status']) ?>">
-                                    <?= $item['status'] ?></a></td>
+                                <td><?php if($item['status'] != null) { ?><a href="stord.php?oid=<?= $item['oid'] ?>" class="<?= strtolower($item['status']) ?>"><?= $item['status'] ?></a><?php } ?></td>
                                 <td><a href="orderreview.php?oid=<?= $item['oid'] ?>" class="review-link">Review</a></td>
                             </tr>
                             <?php } } ?>
