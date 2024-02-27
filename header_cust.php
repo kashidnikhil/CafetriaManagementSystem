@@ -54,16 +54,14 @@
         fetch("getOrderData.php")
         .then(result => result.json())
         .then(data => {
-            if(localStorage.getItem("orders") === null) {
-                localStorage.setItem("orders", JSON.stringify(data));
-            } else if(localStorage.getItem("orders") !== JSON.stringify(data)) {
+            if(localStorage.getItem("orders") === null || (localStorage.getItem("orders") !== JSON.stringify(data))) {
                 localStorage.setItem("orders", JSON.stringify(data));
                 document.getElementById("order-bell").classList.add("blink-anim");
                 document.querySelector("#bell-sound").play();
 
                 setTimeout(() => {
                     document.getElementById("order-bell").classList.remove("blink-anim");
-                }, 5000);
+                }, 6000);
             }
         });
     }
