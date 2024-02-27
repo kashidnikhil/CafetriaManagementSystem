@@ -143,8 +143,10 @@
                                 <th>Status</th>
                             </tr>
                             <?php 
+                                $isReady = null;
                                 while($item = mysqli_fetch_array($r,MYSQLI_ASSOC)) {
                                     $iid = $item['iid'];
+                                    $isReady = $item['status'];
                                     if($det['cid']==919) {
                                         $s = "select * from sjtalacarte where iid='$iid'";
                                         $quer = mysqli_query($db,$s);
@@ -176,20 +178,22 @@
 
                             if($_SERVER['REQUEST_METHOD'] == 'POST'){
                                 if(isset($_POST['rating']) && $_POST['rating']=="1"){
-                                    $oPen = 0; $iidStr = "";
+                                    $oPen = 0; $iidStr = ""; $cStat = null;
                                     $itemQue = "SELECT orderdet.iid, orderdet.status, fc.id FROM orderdet LEFT JOIN sjtalacarte AS sjt ON sjt.iid=orderdet.iid LEFT JOIN food_category AS fc ON fc.id=sjt.category WHERE orderdet.oid='$oid'";
                                     $itemRes = mysqli_query($db,$itemQue);
 
                                     while($ordItem = mysqli_fetch_array($itemRes,MYSQLI_ASSOC)) {
                                         if($ordItem['id']==$fcId) {
                                             $iidStr .= $iidStr==""?$ordItem['iid']:",".$ordItem['iid'];
+                                            $cStat = $ordItem['status'];
                                         } elseif($ordItem['status']!='Accepted') {
                                             $oPen++;
                                         }
                                     }
 
                                     if($iidStr!="") {
-                                        $itemUpQue = "UPDATE orderdet SET `status`='Accepted' WHERE `oid`=$oid AND `iid` IN ($iidStr)";
+                                        $upStat = $cStat==null?'Accepted':'Ready';
+                                        $itemUpQue = "UPDATE orderdet SET `status`='$upStat' WHERE `oid`=$oid AND `iid` IN ($iidStr)";
                                         $itemUpRes = mysqli_query($db,$itemUpQue);
                                     }
 
@@ -232,7 +236,9 @@
                             <!-- <label for="rating" class="mr-20"><strong>Your Choice</strong></label> -->
                             <label class="mr-10"><input type="hidden" name="rating" value="1" required> <!-- Accept --></label>
                             <!-- <label><input type="radio" name="rating" value=1> Decline</label> --><br/>
-                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">Accept</button>
+                            <button type="submit" class="btn btn-sm btn-default" id="Submit" name="Submit">
+                                <?= $isReady==null?'Accept':'Ready' ?>
+                            </button>
                         </form>
                     </div>
                 </div> 
